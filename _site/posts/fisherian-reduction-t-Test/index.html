@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.205">
+<meta name="generator" content="quarto-1.5.12">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stefan Heyder">
 <meta name="dcterms.date" content="2022-02-08">
 
-<title>Blog - Fisherian reduction for the t-Test</title>
+<title>Blog – Fisherian reduction for the t-Test</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,6 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,12 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -114,6 +116,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -123,14 +126,41 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
@@ -144,13 +174,13 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About this blog</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About this blog</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/stefanheyder" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/stefanheyder"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -204,14 +234,17 @@ div.csl-indent {
 
 
 
+
 <p>In the second chapter of <span class="citation" data-cites="Cox2006Principles">(<a href="#ref-Cox2006Principles" role="doc-biblioref">Cox 2006</a>)</span> the authors talks about a <em>Fisherian reduction</em> which I think of as a framework of doing inference given a sufficient statistic <span class="math inline">\(S\)</span>. An interesting point here is that one can use the conditional distribution of the data, <span class="math inline">\(X_1, \dots, X_n\)</span> say, on <span class="math inline">\(S\)</span> to evaluate the fit of the model.</p>
-<p>In this post I want to explore this concept in the setting of a standard <span class="math inline">\(t\)</span>-Test, i.e.&nbsp;we have <span class="math inline">\(X_i \overset{\text{i.i.d}}{\sim} \mathcal N(\mu, \sigma^2)\)</span>. The parameter of interest is of course <span class="math inline">\(\mu\)</span> and <span class="math inline">\(S = (\bar X_n, \hat\sigma^2_{n}\)</span> is a sufficient statistic (^2_n being the empirical variance).</p>
-<p>To apply the <em>Fisherian reduction</em> we thus need to find the conditional distribution of <span class="math inline">\(X = \left(X_1, \dots, X_n\right)\)</span> on <span class="math inline">\(\bar X_n\)</span>, i.e.<span class="math inline">\(X | \bar X_n\)</span>. For this, let <span class="math inline">\(A = \left(A_1, B\right) \in \mathbf R^{n\times n}\)</span> be an orthogonal matrix whose first column is <span class="math inline">\(A_1 = \left(\frac 1 {\sqrt{n}}, \dots , \frac 1 {sqrt{n}} \right)\)</span>.</p>
-<p>Then <span class="math inline">\(Y = A^TX \sim \mathcal N \left(\mu A^T\mu \mathbb 1, \sigma^2 I_{n}\right)\)</span> and <span class="math inline">\(Y = \left(\sqrt{n} \bar X_n, Z\right)\)</span> where <span class="math inline">\(Z \sim \mathcal N \left(\sigma^2 I_{n - 1}\right)\)</span>, <span class="math inline">\(Z\)</span> and <span class="math inline">\(\bar X_n\)</span> being independent.</p>
-<p>Transforming back we obtain the conditional distribution we sought: <span class="math display">\[ X | \bar X_n \sim AY | \bar X_n \mathbb 1 \sim \bar X_n + B Z\]</span></p>
+<p>In this post I want to explore this concept in the setting of a standard <span class="math inline">\(t\)</span>-Test, i.e.&nbsp;we have <span class="math inline">\(X_i \overset{\text{i.i.d}}{\sim} \mathcal N(\mu, \sigma^2)\)</span>. The parameter of interest is of course <span class="math inline">\(\mu\)</span> and <span class="math inline">\(S = (\bar X_n, \hat\sigma^2_{n})\)</span> is a sufficient statistic, with <span class="math inline">\(\hat\sigma^2_n\)</span> the empirical variance.</p>
+<p>To apply the <em>Fisherian reduction</em> we thus need to find the conditional distribution of <span class="math inline">\(X = \left(X_1, \dots, X_n\right)\)</span> on <span class="math inline">\(\bar X_n\)</span>, i.e.<span class="math inline">\(X | \bar X_n\)</span>. For this, let <span class="math inline">\(A = \left(A_1, B\right)  \in \mathbf R^{n\times n}\)</span> be an orthogonal matrix whose first column is <span class="math display">\[A_1 = \left(\frac 1 {\sqrt{n}}, \dots , \frac 1 {\sqrt{n}} \right).\]</span></p>
+<p>Then <span class="math inline">\(Y = A^TX \sim \mathcal N \left(\mu A^T\mu \mathbf 1, \sigma^2 I_{n}\right)\)</span> and <span class="math inline">\(Y = \left(\sqrt{n} \bar X_n, Z\right)\)</span> where <span class="math inline">\(Z \sim \mathcal N \left(\sigma^2 I_{n - 1}\right)\)</span>, <span class="math inline">\(Z\)</span> and <span class="math inline">\(\bar X_n\)</span> being independent.</p>
+<p>Transforming back we obtain the conditional distribution we sought: <span class="math display">\[ X | \bar X_n \sim AY | \bar X_n \mathbf 1 \sim \bar X_n + B Z\]</span></p>
 <p>The catch here is that <span class="math inline">\(B\)</span> is a <span class="math inline">\(n\times (n - 1)\)</span> dimensional matrix, so <span class="math inline">\(X | \bar X_n\)</span> has a normal distribution of dimension <span class="math inline">\(n-1\)</span>, e.g.&nbsp;the variance-covariance matrix is rank-deficient.</p>
 <p>Let’s verify this through simulation.</p>
 <div id="cell-2" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span></span>
@@ -227,22 +260,31 @@ div.csl-indent {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(transformed)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">mean</span>(transformed))</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sd</span>(transformed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.007553103
 [1] 1.05018</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-2-output-3.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
+</div>
 
 
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Cox2006Principles" class="csl-entry" role="listitem">
 Cox, D. R. 2006. <em>Principles of Statistical Inference</em>. <span>Cambridge ; New York</span>: <span>Cambridge University Press</span>.
 </div>
@@ -365,19 +407,55 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
   const processXRef = (id, note) => {
-    if (id.startsWith('sec-')) {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
         }
         return container.innerHTML
       } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
-      return note.innerHTML;
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -386,27 +464,56 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       instance.disable();
       let url = xref.getAttribute('href');
       let hash = undefined; 
-      try { hash = new URL(url).hash; } catch {}
-      const id = hash.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note !== null) {
-        try {
-          const html = processXRef(id, note);
-          instance.setContent(html);
-        } finally {
-          instance.enable();
-          instance.show();
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
         }
       } else {
-        // See if we can fetch this
-        fetch(url.split('#')[0])
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
         .then(res => res.text())
         .then(html => {
           const parser = new DOMParser();
           const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.getElementById(id);
+          const note = htmlDoc.querySelector('main.content');
           if (note !== null) {
-            const html = processXRef(id, note);
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
             instance.setContent(html);
           } 
         }).finally(() => {
@@ -484,6 +591,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
