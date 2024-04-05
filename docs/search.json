@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About this blog",
+    "section": "",
+    "text": "This is me, Stefan Heyder. I am currently finishing my PhD degree at Technische Universität Ilmenau.\nI will sporadically use this blog to process my thoughts on computational statistics. This might include procrastination on my PhD thesis."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stefan Heyder",
+    "section": "",
+    "text": "Fisherian reduction for the t-Test\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFeb 8, 2022\n\n\nStefan Heyder\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/fisherian-reduction-t-Test/index.html",
+    "href": "posts/fisherian-reduction-t-Test/index.html",
+    "title": "Fisherian reduction for the t-Test",
+    "section": "",
+    "text": "In the second chapter of (Cox 2006) the authors talks about a Fisherian reduction which I think of as a framework of doing inference given a sufficient statistic \\(S\\). An interesting point here is that one can use the conditional distribution of the data, \\(X_1, \\dots, X_n\\) say, on \\(S\\) to evaluate the fit of the model.\nIn this post I want to explore this concept in the setting of a standard \\(t\\)-Test, i.e. we have \\(X_i \\overset{\\text{i.i.d}}{\\sim} \\mathcal N(\\mu, \\sigma^2)\\). The parameter of interest is of course \\(\\mu\\) and \\(S = (\\bar X_n, \\hat\\sigma^2_{n})\\) is a sufficient statistic \\(\\hat\\sigma^2_n\\) being the empirical variance).\nTo apply the Fisherian reduction we thus need to find the conditional distribution of \\(X = \\left(X_1, \\dots, X_n\\right)\\) on \\(\\bar X_n\\), i.e.\\(X | \\bar X_n\\). For this, let \\(A = \\left(A_1, B\\right)  \\in \\mathbf R^{n\\times n}\\) be an orthogonal matrix whose first column is \\[A_1 = \\left(\\frac 1 {\\sqrt{n}}, \\dots , \\frac 1 {\\sqrt{n}} \\right).\\]\nThen \\(Y = A^TX \\sim \\mathcal N \\left(\\mu A^T\\mu \\mathbf 1, \\sigma^2 I_{n}\\right)\\) and \\(Y = \\left(\\sqrt{n} \\bar X_n, Z\\right)\\) where \\(Z \\sim \\mathcal N \\left(\\sigma^2 I_{n - 1}\\right)\\), \\(Z\\) and \\(\\bar X_n\\) being independent.\nTransforming back we obtain the conditional distribution we sought: \\[ X | \\bar X_n \\sim AY | \\bar X_n \\mathbf 1 \\sim \\bar X_n + B Z\\]\nThe catch here is that \\(B\\) is a \\(n\\times (n - 1)\\) dimensional matrix, so \\(X | \\bar X_n\\) has a normal distribution of dimension \\(n-1\\), e.g. the variance-covariance matrix is rank-deficient.\nLet’s verify this through simulation.\n\nmu &lt;- 10\nsigma &lt;- 1\nn &lt;- 2\nm &lt;- 1000\nx &lt;- matrix(rnorm(n * m, mu, sigma), nrow= n)\n\ny &lt;- t(t(x) - colMeans(x))\n\ntransformed &lt;- c(matrix(c(1/sqrt(2), -1/sqrt(2)), nrow = 1) %*% y)\n\nplot(y[1,], y[2,])\n\nhist(transformed)\nprint(mean(transformed))\nprint(sd(transformed))\n\n\n\n\n\n\n\n\n[1] 0.007553103\n[1] 1.05018\n\n\n\n\n\n\n\n\n\n\n\n\n\nReferences\n\nCox, D. R. 2006. Principles of Statistical Inference. Cambridge ; New York: Cambridge University Press."
+  }
+]

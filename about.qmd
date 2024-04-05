@@ -1,0 +1,16 @@
+---
+title: "About this blog"
+image: profile.jpg
+about:
+  template: trestles
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/stefanheyder
+
+---
+
+This is me, Stefan Heyder. I am currently finishing my PhD degree at Technische Universität Ilmenau.
+
+I will sporadically use this blog to process my thoughts on computational statistics.
+This might include procrastination on my PhD thesis.
