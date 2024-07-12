@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/regularity-conditions/index.html",
       "/posts/fisherian-reduction-t-Test/index.html"
     ]
   }
