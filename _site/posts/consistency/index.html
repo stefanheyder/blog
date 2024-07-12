@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stefan Heyder">
-<meta name="dcterms.date" content="2022-02-08">
+<meta name="dcterms.date" content="2024-07-07">
 
-<title>Blog - Fisherian reduction for the t-Test</title>
+<title>Blog - Consistency</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -156,7 +122,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -193,7 +159,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Fisherian reduction for the t-Test</h1>
+      <h1 class="title">Consistency</h1>
                       </div>
   </div>
     
@@ -210,16 +176,10 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 8, 2022</p>
+        <p class="date">July 7, 2024</p>
       </div>
     </div>
     
-      <div>
-      <div class="quarto-title-meta-heading">Modified</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date-modified">November 28, 2023</p>
-      </div>
-    </div>
       
     </div>
     
@@ -227,66 +187,32 @@ window.Quarto = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
 
-<p>In the second chapter of <span class="citation" data-cites="Cox2006Principles">(<a href="#ref-Cox2006Principles" role="doc-biblioref">Cox 2006</a>)</span> the authors talks about a <em>Fisherian reduction</em> which I think of as a framework of doing inference given a sufficient statistic <span class="math inline">\(S\)</span>. An interesting point here is that one can use the conditional distribution of the data, <span class="math inline">\(X_1, \dots, X_n\)</span> say, on <span class="math inline">\(S\)</span> to evaluate the fit of the model.</p>
-<p>In this post I want to explore this concept in the setting of a standard <span class="math inline">\(t\)</span>-Test, i.e.&nbsp;we have <span class="math inline">\(X_i \overset{\text{i.i.d}}{\sim} \mathcal N(\mu, \sigma^2)\)</span>. The parameter of interest is of course <span class="math inline">\(\mu\)</span> and <span class="math inline">\(S = (\bar X_n, \hat\sigma^2_{n})\)</span> is a sufficient statistic, with <span class="math inline">\(\hat\sigma^2_n\)</span> the empirical variance.</p>
-<p>To apply the <em>Fisherian reduction</em> we thus need to find the conditional distribution of <span class="math inline">\(X = \left(X_1, \dots, X_n\right)\)</span> on <span class="math inline">\(\bar X_n\)</span>, i.e.<span class="math inline">\(X | \bar X_n\)</span>. For this, let <span class="math inline">\(A = \left(A_1, B\right)  \in \mathbf R^{n\times n}\)</span> be an orthogonal matrix whose first column is <span class="math display">\[A_1 = \left(\frac 1 {\sqrt{n}}, \dots , \frac 1 {\sqrt{n}} \right).\]</span></p>
-<p>Then <span class="math inline">\(Y = A^TX \sim \mathcal N \left(\mu A^T\mu \mathbf 1, \sigma^2 I_{n}\right)\)</span> and <span class="math inline">\(Y = \left(\sqrt{n} \bar X_n, Z\right)\)</span> where <span class="math inline">\(Z \sim \mathcal N \left(\sigma^2 I_{n - 1}\right)\)</span>, <span class="math inline">\(Z\)</span> and <span class="math inline">\(\bar X_n\)</span> being independent.</p>
-<p>Transforming back we obtain the conditional distribution we sought: <span class="math display">\[ X | \bar X_n \sim AY | \bar X_n \mathbf 1 \sim \bar X_n + B Z\]</span></p>
-<p>The catch here is that <span class="math inline">\(B\)</span> is a <span class="math inline">\(n\times (n - 1)\)</span> dimensional matrix, so <span class="math inline">\(X | \bar X_n\)</span> has a normal distribution of dimension <span class="math inline">\(n-1\)</span>, e.g.&nbsp;the variance-covariance matrix is rank-deficient.</p>
-<p>Let’s verify this through simulation.</p>
-<div id="cell-2" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> m, mu, sigma), <span class="at">nrow=</span> n)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">t</span>(x) <span class="sc">-</span> <span class="fu">colMeans</span>(x))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>transformed <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span>), <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span>)), <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">%*%</span> y)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y[<span class="dv">1</span>,], y[<span class="dv">2</span>,])</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(transformed)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">mean</span>(transformed))</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sd</span>(transformed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.007553103
-[1] 1.05018</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
+<p>After discussing the reason for asymptotics in [asymptotics], I want to elaborate a bit more on both consistency and central limit theorems for estimators. In particular, I want to demonstrate proof techniques for showing that an estimator is consistent. Depending on the estimator at hand, these may apply or not.</p>
+<section id="notation-and-setting" class="level1 page-columns page-full">
+<h1>Notation and setting</h1>
+<p>Let’s start with the setup for this post. Consider a parametric family of probability measures <span class="math inline">\((\mathbf P_{\theta})_{\theta\in\Theta}\)</span> on <span class="math inline">\(\mathbf R^n\)</span> where the set of parameters is <span class="math inline">\(k\)</span>-dimensional <span class="math inline">\(\Theta \subseteq \mathbf R^k\)</span>. We’ll require that the family is identifiable, otherwise consistent estimators cannot exist. Let us call the true parameter <span class="math inline">\(\theta_0\in\mathbf R^{k}\)</span>.</p>
+<div class="page-columns page-full"><p>We start with the approach found in <span class="citation" data-cites="Lehmann1998Theory">(<a href="#ref-Lehmann1998Theory" role="doc-biblioref">Lehmann and Casella 1998</a>)</span> to prove the consistency of maximum likelihood estimators (MLE). Actually, with a few additional assumptions (that are fulfilled for MLEs), we can extend their argument to so-called Z-estimators. Z-estimators are estimators that are defined as zeros of so-called estimating equations. These are functions <span class="math inline">\(f_{N}: (\mathbf R^{n})^{N} \times \mathbf R^{k} \to \mathbf R^{l}\)</span> of the observed data <span class="math inline">\(X_1, \dots, X_N \stackrel{\text{i.i.d}}{\sim} \mathbf P_{\theta_{0}}\)</span> and parameters <span class="math inline">\(\theta \in \Theta\)</span>. If <span class="math inline">\(\hat \theta_N\)</span> is an estimator of <span class="math inline">\(\theta\)</span> defined by </p><div class="no-row-height column-margin column-container"><span class="margin-aside">Sometimes we can relax the right-hand side to be only <span class="math inline">\(o_{\mathbf P}(1)\)</span>, but that will not be necessary.</span></div></div>
+<p><span class="math display">\[
+f_N \left(X_{1}, \dots, X_{N}, \hat\theta_{N} \right) = 0.
+\]</span></p>
 
 
 
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-Cox2006Principles" class="csl-entry" role="listitem">
-Cox, D. R. 2006. <em>Principles of Statistical Inference</em>. <span>Cambridge ; New York</span>: <span>Cambridge University Press</span>.
+<div id="ref-Lehmann1998Theory" class="csl-entry" role="listitem">
+Lehmann, E. L., and George Casella. 1998. <em>Theory of Point Estimation</em>. 2nd ed. Springer Texts in Statistics. New York: Springer.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
