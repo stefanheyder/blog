@@ -33,12 +33,12 @@ Definition (Gumbel distribution)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For <img src="https://latex.codecogs.com/png.latex?%5Cmu%20%5Cin%20%5Cmathbf%20R"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20%5Cin%20%5Cmathbf%20R_%7B%3E%200%7D"> the $ (, )$ distribution has the CDF <img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0A%20%20%20%20F:%20(-%5Cinfty,%20%5Cinfty)%20%5Cto%20(0,%201)%20&amp;&amp;%20x%20%5Cmapsto%20%5Cexp%20%5Cleft(%20-%5Cexp%20%5Cleft(%20-%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20%5Cright)%20%20%5Cright).%0A%5Cend%7Balign*%7D%0A"></p>
+<p>For <img src="https://latex.codecogs.com/png.latex?%5Cmu%20%5Cin%20%5Cmathbf%20R"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20%5Cin%20%5Cmathbf%20R_%7B%3E%200%7D"> the <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BGumbel%7D(%5Cmu,%20%5Cbeta)"> distribution has the CDF <img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0A%20%20%20%20F:%20(-%5Cinfty,%20%5Cinfty)%20%5Cto%20(0,%201)%20&amp;&amp;%20x%20%5Cmapsto%20%5Cexp%20%5Cleft(%20-%5Cexp%20%5Cleft(%20-%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20%5Cright)%20%20%5Cright).%0A%5Cend%7Balign*%7D%0A"></p>
 </div>
 </div>
 <p>Let us quickly ensure that this defines a distribution: this CDF is strictly monotonically increasing and for <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20-%5Cinfty"> it goes to <img src="https://latex.codecogs.com/png.latex?0">, while for <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20%5Cinfty"> it goes to <img src="https://latex.codecogs.com/png.latex?%5Cexp(0)%20=%201">. By differentiating the CDF we obtain the density (with respect to Lebesgue measure), which is <img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7B1%7D%7B%5Cbeta%7D%20%5Cexp%20%5Cleft(%20-%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20-%5Cexp%20%5Cleft(%20-%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20%5Cright)%20%5Cright),%0A"> so the distribution is a continuous one.</p>
 <p>Simulating from this distribution is straight-forward using the inverse CDF trick: simulate <img src="https://latex.codecogs.com/png.latex?U%20%5Csim%20%5Coperatorname%7BUnif%7D(0,1)"> and let <img src="https://latex.codecogs.com/png.latex?G%20=%20F%5E%7B-1%7D(U)%20=%20-%5Cbeta%5Clog(%20-%5Clog%20(U))%20%20+%20%5Cmu,"> then <img src="https://latex.codecogs.com/png.latex?G%20%5Csim%20%5Coperatorname%7BGumbel%7D(%5Cmu,%20%5Cbeta)">. Let’s draw some samples from the standard Gumbel distribution, i.e.&nbsp;where <img src="https://latex.codecogs.com/png.latex?%5Cmu%20=%200"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20=%201">.</p>
-<div id="cell-4" class="cell" data-execution_count="17">
+<div id="cell-3" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
@@ -219,7 +219,7 @@ Proof
 </div>
 </div>
 <p>Again, let’s verify by simulation that this is true, comparing to the density of the standard Gumbel distribution.</p>
-<div id="cell-7" class="cell" data-execution_count="54">
+<div id="cell-6" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
@@ -385,14 +385,14 @@ font-style: inherit;">1</span>))</span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Theorem (limit theorem for extrema) <span class="citation" data-cites="Johnson1994Continuous">(<strong>Johnson1994Continuous?</strong>)</span>
+Theorem (limit theorem for extrema) <span class="citation" data-cites="Johnson1995Continuous">(Johnson, Kotz, and Balakrishnan 1995)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let <img src="https://latex.codecogs.com/png.latex?X_i,%20i%20%5Cin%20%5Cmathbf%20N"> be a sequence of i.i.d. random variables, let <img src="https://latex.codecogs.com/png.latex?Y_n%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_i"> be the running maximum and consider <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20Z_%7Bn%7D%20=%20Y_%7Bn%7D%20+%20b_%7Bn%7D.%0A"></p>
-<p>If <img src="https://latex.codecogs.com/png.latex?Z_n"> converges in distribution to a random variable <img src="https://latex.codecogs.com/png.latex?Z">, then <img src="https://latex.codecogs.com/png.latex?Z%20%5Csim%20%5Coperatorname%7BGumbel%7D()">.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?X_i,%20i%20%5Cin%20%5Cmathbf%20N"> be a sequence of i.i.d. random variables, let <img src="https://latex.codecogs.com/png.latex?Y_n%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_i"> be the running maximum and consider <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20Z_%7Bn%7D%20=%20Y_%7Bn%7D%20-%20b_%7Bn%7D,%0A"> for a sequence of real numbers <img src="https://latex.codecogs.com/png.latex?b_n">, such that for every <img src="https://latex.codecogs.com/png.latex?k"> <img src="https://latex.codecogs.com/png.latex?b_%7Bkn%7D%20-%20b_n"> converges as <img src="https://latex.codecogs.com/png.latex?n%5Cto%20%5Cinfty"> for every <img src="https://latex.codecogs.com/png.latex?k">.</p>
+<p>If <img src="https://latex.codecogs.com/png.latex?Z_n"> converges in distribution to a distribution with an injective CDF, then the limiting distribution is a Gumbel distribution.</p>
 </div>
-</div>
+</div><div class="no-row-height column-margin column-container"><span class="margin-aside callout-margin-content">I could not get rid of this technical assumption, see the sidenotes in the proof.</span><span class="margin-aside callout-margin-content">again, could not get rid of this either</span></div>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -405,17 +405,175 @@ Proof
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>By the properties of the CDF and the i.i.d. assumption, we have</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20F_%7BY_n%7D%20(y)%20=%20%5Cmathbf%20P%20%5Cleft(%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_i%20%5Cleq%20y%20%5Cright)%20%20=%20%5Cmathbf%20P%20%5Cleft(X_i%20%5Cleq%20y,%5C,%20i%20=%201,%20%5Cdots,%20n%5Cright)%20%20=%20(F_%7BX_1%7D(y))%5En.%0A"> Let <img src="https://latex.codecogs.com/png.latex?G"> be the CDF of the limiting distribution. Let <img src="https://latex.codecogs.com/png.latex?k%5Cin%5Cmathbf%20N"> and partition the first <img src="https://latex.codecogs.com/png.latex?k%5Ccdot%20n"> random variables into blocks of size <img src="https://latex.codecogs.com/png.latex?k">, i.e.&nbsp;</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Cbegin%7Balign*%7D%0A%20%20%20%20%20%20%20%20Y%5E%7Bj%7D_%7Bk%7D%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_%7B(j%20-%201)k%20+%20i%7D%20&amp;&amp;%20j%20=%201,%20%5Cdots,%20k,%0A%20%20%20%20%5Cend%7Balign*%7D%0A"> and let <img src="https://latex.codecogs.com/png.latex?Z%5Ej_k%20=%20Y%5Ej_k%20+%20b_k">. Then, as <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty"> <img src="https://latex.codecogs.com/png.latex?Z%5Ej_k%20%5Cstackrel%7B%5Cmathcal%20D%7D%7B%5Clongrightarrow%7D%20Z"> as well <strong>todo</strong> fix this</p>
-<p><img src="https://latex.codecogs.com/png.latex?Z_%7Bk%20%5Ccdot%20n%7D%20=%20%5Cmax_%7Bj%20=%201,%20%5Cdots,%20k%7D%20Z%5Ej_k"> and</p>
+<p>I basically follow <span class="citation" data-cites="Johnson1995Continous">(<strong>Johnson1995Continous?</strong>)</span> in this proof. Let <img src="https://latex.codecogs.com/png.latex?G"> be the CDF of the limiting distribution and <img src="https://latex.codecogs.com/png.latex?Z%20%5Csim%20G"> and denote general CDFs by <img src="https://latex.codecogs.com/png.latex?F">. We have to show that <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(x)%20=%20%5Cexp%20%5Cleft(%20-%20%5Cexp%20%5Cleft(%20-%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20%5Cright)%20%5Cright)%0A"> for some <img src="https://latex.codecogs.com/png.latex?%5Cmu%20%5Cin%20%5Cmathbf%20R"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20%5Cin%20%5Cmathbf%20R_%7B%3E%200%7D">. Let <img src="https://latex.codecogs.com/png.latex?k%5Cin%5Cmathbf%20N"> and partition the random variables into blocks of size <img src="https://latex.codecogs.com/png.latex?n">, and consider the block-wise maximum, i.e.<br>
+<img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Cbegin%7Balign*%7D%0A%20%20%20%20%20%20%20%20Y%5E%7Bj%7D_%7Bn%7D%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_%7B(j%20-%201)k%20+%20i%7D%20&amp;&amp;%20j%20=%201,%20%5Cdots,%20k.%0A%20%20%20%20%5Cend%7Balign*%7D%0A"> Let <img src="https://latex.codecogs.com/png.latex?Z%5Ej_n%20=%20Y%5Ej_n%20-%20b_n"> and let <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty">. Then <img src="https://latex.codecogs.com/png.latex?Z%5Ej_n%20%5Cstackrel%7B%5Cmathcal%20D%7D%7B%5Clongrightarrow%7D%20Z"> for <img src="https://latex.codecogs.com/png.latex?j%20=%201,%20%5Cdots,%20k">.</p>
+<p>Now <img src="https://latex.codecogs.com/png.latex?Z_%7Bkn%7D%20=%20%5Cmax_%7Bj%20=%201,%20%5Cdots,%20k%7D%20Z%5Ej_n%20+%20b_%7Bn%7D%20-%20b_%7Bkn%7D"> also converges to <img src="https://latex.codecogs.com/png.latex?Z"> in distribution. By the properties of the CDF and the i.i.d. assumption, we have<br>
+<img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20F_%7BZ_%7Bkn%7D%7D%20(z)%20=%20%5Cmathbf%20P%20%5Cleft(%20%5Cmax_%7Bj%20=%201,%20%5Cdots%20k%7D%20Z%5E%7Bj%7D_n%20%5Cleq%20z%20-%20b_%7Bn%7D%20+%20b_%7Bkn%7D%20%5Cright)%20%20=%20(F_%7BZ%5E%7B1%7D_n%7D(z%20-%20b_%7Bn%7D%20+%20b_%7Bkn%7D))%5E%7Bk%7D.%0A"> As <img src="https://latex.codecogs.com/png.latex?n"> goes to <img src="https://latex.codecogs.com/png.latex?%5Cinfty">, the left hand side converges to <img src="https://latex.codecogs.com/png.latex?G(z)">, and so the right-hand side does as well. Assuming <img src="https://latex.codecogs.com/png.latex?-b_n%20+%20b_%7Bkn%7D%20%5Cto%20c_%7Bk%7D"> as <img src="https://latex.codecogs.com/png.latex?n%5Cto%20%5Cinfty">, the right-hand side converges to <img src="https://latex.codecogs.com/png.latex?G(z%20-%20c_k)%5Ek"> as well.  Thus <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z)%20=%20G(z%20-%20c_%7Bk%7D)%5E%7Bk%7D,%0A"> or, equivalently, <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z%20+%20c_%7Bk%7D)%20=%20G(z)%5E%7Bk%7D.%0A"> This implies <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z%20+%20c_%7Bk%7D%20+%20c_%7Bl%7D)%20=%20(G(z)%5E%7Bk%7D)%5E%7Bl%7D%20=%20G(z)%5E%7Bkl%7D%20=%20G(z%20+%20c_%7Bkl%7D),%0A"> so <img src="https://latex.codecogs.com/png.latex?c_k%20+%20c_l%20=%20c_%7Bkl%7D">, if <img src="https://latex.codecogs.com/png.latex?G"> is injective [again, <span class="citation" data-cites="Johnson1995Continous">(<strong>Johnson1995Continous?</strong>)</span> skip over this]. Thus <img src="https://latex.codecogs.com/png.latex?c_k%20=%20%5Cxi%5Clog%20k"> for some <img src="https://latex.codecogs.com/png.latex?%5Cxi%20%5Cin%20%5Cmathbf%20R">.</p>
+<p>Taking logs twice, we obtain <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Clog%20k%20+%20%5Clog%20(-%20%5Clog%20G(z))%20=%20%5Clog%20-%20%5Clog%20G(z%20+%20%5Cxi%20%5Clog%20k),%0A"> and so <img src="https://latex.codecogs.com/png.latex?z%20%5Cmapsto%20%5Clog%20(-%20%5Clog%20G(z))"> is an affine function, which was just what we had to show.</p>
+</div>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><span class="margin-aside callout-5-contents callout-collapse collapse callout-margin-content"><span class="citation" data-cites="Johson1995Continuous">(<strong>Johson1995Continuous?</strong>)</span> as well as <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Tippett%E2%80%93Gnedenko_theorem#References">wikipedia</a> directly use <img src="https://latex.codecogs.com/png.latex?-b_n%20+%20b_%7Bkn%7D%20=%20b_k">, but I haven’t seen a direct proof yet. <span class="citation" data-cites="Haan2006Extreme">(Haan and Ferreira 2006)</span> goes a different, more precise route.</span></div><p>Finally, to check whether this works, let us perform some simulations for the maximum of <img src="https://latex.codecogs.com/png.latex?n"> standard normal draws.</p>
+<div id="cell-10" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> scipy.stats.distributions <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> norm</span>
+<span id="cb3-2"></span>
+<span id="cb3-3">fig, axs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb3-4">fig.tight_layout()</span>
+<span id="cb3-5">ns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>]</span>
+<span id="cb3-6">m <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100000</span></span>
+<span id="cb3-7"></span>
+<span id="cb3-8"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> ax, n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(axs.flatten(), ns):</span>
+<span id="cb3-9">    X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.normal(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, (m, n))</span>
+<span id="cb3-10">    Y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(X, axis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb3-11">    min_z, max_z <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(Y), <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(Y)</span>
+<span id="cb3-12">    ax.hist(Y, bins<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, density<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb3-13">    mu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> norm.ppf(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>n)</span>
+<span id="cb3-14">    beta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> norm.ppf(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> np.exp(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> mu</span>
+<span id="cb3-15">    ax.plot(np.linspace(min_z, max_z, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>), density_gumbel(np.linspace(min_z, max_z, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>), mu, beta), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'r'</span>)</span>
+<span id="cb3-16">    ax.set_title(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"max of </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>n<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> standard normal draws"</span>)</span>
+<span id="cb3-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># mode of gumbel distribution is at mu</span></span>
+<span id="cb3-18">    ax.set_ylim(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> density_gumbel(mu,mu,beta))</span>
+<span id="cb3-19"></span>
+<span id="cb3-20">plt.show()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
 </div>
 
 
 
- ]]></description>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-Haan2006Extreme" class="csl-entry">
+Haan, L. de, and Ana Ferreira. 2006. <em>Extreme Value Theory: An Introduction</em>. Springer Series in Operations Research. New York ; London: Springer.
+</div>
+<div id="ref-Johnson1995Continuous" class="csl-entry">
+Johnson, Norman L., Samuel Kotz, and Narayanaswamy Balakrishnan. 1995. <em>Continuous Univariate Distributions</em>. Vol. II. John Wiley &amp; Sons, Ltd.
+</div>
+</div></section></div> ]]></description>
   <guid>https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</guid>
   <pubDate>Thu, 08 Aug 2024 22:00:00 GMT</pubDate>
 </item>

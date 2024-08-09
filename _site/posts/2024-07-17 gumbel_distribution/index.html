@@ -56,7 +56,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -232,7 +252,7 @@ Definition (Gumbel distribution)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For <span class="math inline">\(\mu \in \mathbf R\)</span> and <span class="math inline">\(\beta \in \mathbf R_{&gt; 0}\)</span> the $ (, )$ distribution has the CDF <span class="math display">\[
+<p>For <span class="math inline">\(\mu \in \mathbf R\)</span> and <span class="math inline">\(\beta \in \mathbf R_{&gt; 0}\)</span> the <span class="math inline">\(\operatorname{Gumbel}(\mu, \beta)\)</span> distribution has the CDF <span class="math display">\[
 \begin{align*}
     F: (-\infty, \infty) \to (0, 1) &amp;&amp; x \mapsto \exp \left( -\exp \left( - \frac{x - \mu}{\beta} \right)  \right).
 \end{align*}
@@ -243,7 +263,7 @@ Definition (Gumbel distribution)
 \frac{1}{\beta} \exp \left( - \frac{x - \mu}{\beta} -\exp \left( - \frac{x - \mu}{\beta} \right) \right),
 \]</span> so the distribution is a continuous one.</p>
 <p>Simulating from this distribution is straight-forward using the inverse CDF trick: simulate <span class="math inline">\(U \sim \operatorname{Unif}(0,1)\)</span> and let <span class="math display">\[G = F^{-1}(U) = -\beta\log( -\log (U))  + \mu,\]</span> then <span class="math inline">\(G \sim \operatorname{Gumbel}(\mu, \beta)\)</span>. Let’s draw some samples from the standard Gumbel distribution, i.e.&nbsp;where <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\beta = 1\)</span>.</p>
-<div id="cell-4" class="cell" data-execution_count="17">
+<div id="cell-3" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -313,7 +333,7 @@ Proof
 </div>
 </div>
 <p>Again, let’s verify by simulation that this is true, comparing to the density of the standard Gumbel distribution.</p>
-<div id="cell-7" class="cell" data-execution_count="54">
+<div id="cell-6" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sim_exponential(n, lambd):</span>
@@ -355,16 +375,16 @@ Proof
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Theorem (limit theorem for extrema) <span class="citation" data-cites="Johnson1994Continuous">(<a href="#ref-Johnson1994Continuous" role="doc-biblioref"><strong>Johnson1994Continuous?</strong></a>)</span>
+Theorem (limit theorem for extrema) <span class="citation" data-cites="Johnson1995Continuous">(<a href="#ref-Johnson1995Continuous" role="doc-biblioref">Johnson, Kotz, and Balakrishnan 1995</a>)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Let <span class="math inline">\(X_i, i \in \mathbf N\)</span> be a sequence of i.i.d. random variables, let <span class="math inline">\(Y_n = \max_{i = 1, \dots, n} X_i\)</span> be the running maximum and consider <span class="math display">\[
-    Z_{n} = Y_{n} + b_{n}.
-\]</span></p>
-<p>If <span class="math inline">\(Z_n\)</span> converges in distribution to a random variable <span class="math inline">\(Z\)</span>, then <span class="math inline">\(Z \sim \operatorname{Gumbel}()\)</span>.</p>
+    Z_{n} = Y_{n} - b_{n},
+\]</span> for a sequence of real numbers <span class="math inline">\(b_n\)</span>, such that for every <span class="math inline">\(k\)</span> <span class="math inline">\(b_{kn} - b_n\)</span> converges as <span class="math inline">\(n\to \infty\)</span> for every <span class="math inline">\(k\)</span>.</p>
+<p>If <span class="math inline">\(Z_n\)</span> converges in distribution to a distribution with an injective CDF, then the limiting distribution is a Gumbel distribution.</p>
 </div>
-</div>
+</div><div class="no-row-height column-margin column-container"><span class="margin-aside callout-margin-content">I could not get rid of this technical assumption, see the sidenotes in the proof.</span><span class="margin-aside callout-margin-content">again, could not get rid of this either</span></div>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -377,23 +397,75 @@ Proof
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>By the properties of the CDF and the i.i.d. assumption, we have</p>
-<p><span class="math display">\[
-    F_{Y_n} (y) = \mathbf P \left( \max_{i = 1, \dots, n} X_i \leq y \right)  = \mathbf P \left(X_i \leq y,\, i = 1, \dots, n\right)  = (F_{X_1}(y))^n.
-\]</span> Let <span class="math inline">\(G\)</span> be the CDF of the limiting distribution. Let <span class="math inline">\(k\in\mathbf N\)</span> and partition the first <span class="math inline">\(k\cdot n\)</span> random variables into blocks of size <span class="math inline">\(k\)</span>, i.e.&nbsp;</p>
-<p><span class="math display">\[
+<p>I basically follow <span class="citation" data-cites="Johnson1995Continous">(<a href="#ref-Johnson1995Continous" role="doc-biblioref"><strong>Johnson1995Continous?</strong></a>)</span> in this proof. Let <span class="math inline">\(G\)</span> be the CDF of the limiting distribution and <span class="math inline">\(Z \sim G\)</span> and denote general CDFs by <span class="math inline">\(F\)</span>. We have to show that <span class="math display">\[
+    G(x) = \exp \left( - \exp \left( -\frac{x - \mu}{\beta} \right) \right)
+\]</span> for some <span class="math inline">\(\mu \in \mathbf R\)</span> and <span class="math inline">\(\beta \in \mathbf R_{&gt; 0}\)</span>. Let <span class="math inline">\(k\in\mathbf N\)</span> and partition the random variables into blocks of size <span class="math inline">\(n\)</span>, and consider the block-wise maximum, i.e.<br>
+<span class="math display">\[
     \begin{align*}
-        Y^{j}_{k} = \max_{i = 1, \dots, n} X_{(j - 1)k + i} &amp;&amp; j = 1, \dots, k,
+        Y^{j}_{n} = \max_{i = 1, \dots, n} X_{(j - 1)k + i} &amp;&amp; j = 1, \dots, k.
     \end{align*}
-\]</span> and let <span class="math inline">\(Z^j_k = Y^j_k + b_k\)</span>. Then, as <span class="math inline">\(n \to \infty\)</span> <span class="math inline">\(Z^j_k \stackrel{\mathcal D}{\longrightarrow} Z\)</span> as well <strong>todo</strong> fix this</p>
-<p><span class="math inline">\(Z_{k \cdot n} = \max_{j = 1, \dots, k} Z^j_k\)</span> and</p>
+\]</span> Let <span class="math inline">\(Z^j_n = Y^j_n - b_n\)</span> and let <span class="math inline">\(n \to \infty\)</span>. Then <span class="math inline">\(Z^j_n \stackrel{\mathcal D}{\longrightarrow} Z\)</span> for <span class="math inline">\(j = 1, \dots, k\)</span>.</p>
+<p>Now <span class="math inline">\(Z_{kn} = \max_{j = 1, \dots, k} Z^j_n + b_{n} - b_{kn}\)</span> also converges to <span class="math inline">\(Z\)</span> in distribution. By the properties of the CDF and the i.i.d. assumption, we have<br>
+<span class="math display">\[
+    F_{Z_{kn}} (z) = \mathbf P \left( \max_{j = 1, \dots k} Z^{j}_n \leq z - b_{n} + b_{kn} \right)  = (F_{Z^{1}_n}(z - b_{n} + b_{kn}))^{k}.
+\]</span> As <span class="math inline">\(n\)</span> goes to <span class="math inline">\(\infty\)</span>, the left hand side converges to <span class="math inline">\(G(z)\)</span>, and so the right-hand side does as well. Assuming <span class="math inline">\(-b_n + b_{kn} \to c_{k}\)</span> as <span class="math inline">\(n\to \infty\)</span>, the right-hand side converges to <span class="math inline">\(G(z - c_k)^k\)</span> as well.  Thus <span class="math display">\[
+    G(z) = G(z - c_{k})^{k},
+\]</span> or, equivalently, <span class="math display">\[
+    G(z + c_{k}) = G(z)^{k}.
+\]</span> This implies <span class="math display">\[
+    G(z + c_{k} + c_{l}) = (G(z)^{k})^{l} = G(z)^{kl} = G(z + c_{kl}),
+\]</span> so <span class="math inline">\(c_k + c_l = c_{kl}\)</span>, if <span class="math inline">\(G\)</span> is injective [again, <span class="citation" data-cites="Johnson1995Continous">(<a href="#ref-Johnson1995Continous" role="doc-biblioref"><strong>Johnson1995Continous?</strong></a>)</span> skip over this]. Thus <span class="math inline">\(c_k = \xi\log k\)</span> for some <span class="math inline">\(\xi \in \mathbf R\)</span>.</p>
+<p>Taking logs twice, we obtain <span class="math display">\[
+    \log k + \log (- \log G(z)) = \log - \log G(z + \xi \log k),
+\]</span> and so <span class="math inline">\(z \mapsto \log (- \log G(z))\)</span> is an affine function, which was just what we had to show.</p>
+</div>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><span class="margin-aside callout-5-contents callout-collapse collapse callout-margin-content"><span class="citation" data-cites="Johson1995Continuous">(<a href="#ref-Johson1995Continuous" role="doc-biblioref"><strong>Johson1995Continuous?</strong></a>)</span> as well as <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Tippett%E2%80%93Gnedenko_theorem#References">wikipedia</a> directly use <span class="math inline">\(-b_n + b_{kn} = b_k\)</span>, but I haven’t seen a direct proof yet. <span class="citation" data-cites="Haan2006Extreme">(<a href="#ref-Haan2006Extreme" role="doc-biblioref">Haan and Ferreira 2006</a>)</span> goes a different, more precise route.</span></div><p>Finally, to check whether this works, let us perform some simulations for the maximum of <span class="math inline">\(n\)</span> standard normal draws.</p>
+<div id="cell-10" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats.distributions <span class="im">import</span> norm</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">3</span>,<span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">5</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ns <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">100</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="dv">100000</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, n <span class="kw">in</span> <span class="bu">zip</span>(axs.flatten(), ns):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, (m, n))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    Y <span class="op">=</span> np.<span class="bu">max</span>(X, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    min_z, max_z <span class="op">=</span> <span class="bu">min</span>(Y), <span class="bu">max</span>(Y)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    ax.hist(Y, bins<span class="op">=</span><span class="dv">100</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> norm.ppf(<span class="dv">1</span><span class="op">-</span><span class="dv">1</span><span class="op">/</span>n)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> norm.ppf(<span class="dv">1</span> <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> n <span class="op">/</span> np.exp(<span class="dv">1</span>)) <span class="op">-</span> mu</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    ax.plot(np.linspace(min_z, max_z, <span class="dv">1000</span>), density_gumbel(np.linspace(min_z, max_z, <span class="dv">1000</span>), mu, beta), <span class="st">'r'</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"max of </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> standard normal draws"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mode of gumbel distribution is at mu</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="fl">1.2</span><span class="op">*</span> density_gumbel(mu,mu,beta))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
 </div>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Haan2006Extreme" class="csl-entry" role="listitem">
+Haan, L. de, and Ana Ferreira. 2006. <em>Extreme Value Theory: An Introduction</em>. Springer Series in Operations Research. New York ; London: Springer.
+</div>
+<div id="ref-Johnson1995Continuous" class="csl-entry" role="listitem">
+Johnson, Norman L., Samuel Kotz, and Narayanaswamy Balakrishnan. 1995. <em>Continuous Univariate Distributions</em>. Vol. II. John Wiley &amp; Sons, Ltd.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
