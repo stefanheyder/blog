@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Stefan Heyder">
-<meta name="dcterms.date" content="2024-07-06">
 
-<title>Blog - Asymptotics of estimators</title>
+<title>Statistical Ramblings - Impressum</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,22 +23,21 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,48 +66,19 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Blog</span>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Statistical Ramblings</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -120,11 +88,20 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About this blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./impressum.html" aria-current="page"> 
+<span class="menu-text">Impressum</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/stefanheyder"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -136,122 +113,32 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Asymptotics of estimators</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Stefan Heyder </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">July 6, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    </div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
-
-
-
-
-
-<div class="page-columns page-full"><p>In my PhD thesis, I compare two methods to perform optimal importance sampling: the Cross-Entropy method (CE) and Efficient Importance Sampling (EIS). There are several criteria that you may want to consider for this comparison, but without going into too much detail , in this post, I’ll focus on only one aspect: asymptotics, in particular asymptotic relative efficiencies.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">If you’re interested, check out the <a href="https://github.com/stefanheyder/dissertation">draft of my thesis on Github.</a></span></div></div>
-<p>In the context of my thesis, this crops up as both methods are simulation-based. Usually, we have to resort to simulation techniques when analytical computation is too difficult, which is exactly the case here! Both methods actually want to solve an optimization problem in the background, solving for an optimal parameter <span class="math inline">\(\psi\)</span>. Unfortunately, the optimization problems involve quantities that we have no (analytical) access to. We can, however, set up a simulation routine that provides an estimate <span class="math inline">\(\hat\psi\)</span> of this optimal parameter.</p>
-<p>But using simulations means that the output of both methods is now random, i.e.&nbsp;we can expect to get different results <span class="math inline">\(\hat\psi\)</span> when we repeatedly apply the methods using different RNG seeds. This can be problematic: if there is too much variation the actual <span class="math inline">\(\hat\psi\)</span> we obtain could be far away from the optimal <span class="math inline">\(\psi\)</span> and the performance of the methods suffers.</p>
-<p>This is where asymptotics come into play. When statisticians talk about asymptotics for estimators, here <span class="math inline">\(\hat\psi\)</span>, they are usually concerned with two things: <em>consistency</em> and <em>asymptotic normality</em>. <em>Consistency</em> is a critical property of an estimator.</p>
-<section id="consistency" class="level1 page-columns page-full">
-<h1>Consistency</h1>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<div class="quarto-about-trestles content">
+  <div class="about-entity">
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Impressum</h1>
 </div>
-<div class="callout-title-container flex-fill">
-Definition (consistency)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Let <span class="math inline">\((\hat\psi_{N})_{N \in \mathbf N}\)</span> be a sequence of estimator of <span class="math inline">\(\psi\)</span>. We say that <span class="math inline">\(\hat\psi_{N}\)</span> is weakly consistent if <span class="math display">\[
-\hat\psi_{N} \stackrel{\mathbb P}{\to} \psi
-\]</span> and strongly consistent, if <span class="math display">\[
-\hat \psi_{N} \stackrel{\text{a.s.}}{\to} \psi.
-\]</span></p>
-</div>
-</div>
-<div class="no-row-height column-margin column-container"><span class="margin-aside callout-margin-content">In the following I’ll be a little bit sloppy and identify <span class="math inline">\(\hat\psi_{N}\)</span> with the sequence of estimators <span class="math inline">\((\hat\psi_{N})_{N \in \mathbf N}\)</span>.</span></div><p>Consistency captures the intuitive property that, as we increase the number of samples <span class="math inline">\(N\)</span> used in our simulation routine, the noisy estimate <span class="math inline">\(\hat\psi_N\)</span> should get closer and closer to the true <span class="math inline">\(\psi\)</span>. Without consistency, our simulation routine is essentially useless.</p>
-<p>But consistency alone does not tell us how large we should choose our sample size <span class="math inline">\(N\)</span>. For that, central limit theorems can help.</p>
-<p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<section id="asymptotic-normality" class="level2">
-<h2 class="anchored" data-anchor-id="asymptotic-normality">Asymptotic normality</h2>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definition (central limit theorem)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Again, let <span class="math inline">\((\hat\psi_{N})_{N \in \mathbf N}\)</span> be a sequence of estimator of <span class="math inline">\(\psi\)</span>. If <span class="math display">\[
-\sqrt {N} \left( \hat \psi_N - \psi \right) \stackrel{\mathcal D}{\to} \mathcal N(0, \Sigma),
-\]</span> we say that <span class="math inline">\(\hat\psi_{N}\)</span> fulfills a central limit theorem with asymptotic covariance matrix <span class="math inline">\(\Sigma\)</span>.</p>
-</div>
-</div>
-<p>If we have a consistent estimator, notice that <span class="math inline">\(\hat\psi_N - \psi\)</span> goes to <span class="math inline">\(0\)</span> as <span class="math inline">\(N\)</span> goes to <span class="math inline">\(\infty\)</span> (in probability or almost surely, depending on the type of consistency). Multiplying by <span class="math inline">\(\sqrt{N}\)</span> “blows up” this error, essentially zooming in to what happens around the true value <span class="math inline">\(\psi\)</span>. Note that any estimator that fulfills a central limit theorem is weakly consistent.</p>
-<p>Why should we assume a normal distribution as the limiting distribution? At first this choice may seem surprising, maybe even restrictive. But it turns out that for large classes of estimators, e.g.&nbsp;M- and Z-estimators, we can proof such a central limit theorem.</p>
-<p>How does having a central limit theorem help us? If we know <span class="math inline">\(\Sigma\)</span>, we can use it get a heuristic on how large we should choose <span class="math inline">\(N\)</span>. Using the approximation <span class="math display">\[
-\hat\psi_{N} -\psi \approx \mathcal N\left(0, \frac{\Sigma}{N}\right)
-\]</span> we can choose <span class="math inline">\(N\)</span> such that, e.g., for a given error <span class="math inline">\(\varepsilon &gt; 0\)</span>, the probability that <span class="math inline">\(\lVert \hat \psi_N - \psi \rVert &lt; \varepsilon\)</span> becomes, say, at least <span class="math inline">\(80\%\)</span>.</p>
-<p>Additionally, if we have two estimators <span class="math inline">\(\hat \psi^1\)</span> and <span class="math inline">\(\hat\psi^{2}\)</span>, both of which fulfill a central limit theorem with asymptotic covariance matrices <span class="math inline">\(\Sigma_1\)</span> and <span class="math inline">\(\Sigma_{2}\)</span>, we can compare <span class="math inline">\(\Sigma_1\)</span> and <span class="math inline">\(\Sigma_2\)</span>. The estimator with the “smaller” asymptotic covariance matrix is the one we should prefer.</p>
-<p>As we are dealing with matrices it is not necessarily clear what smaller means, we could be interested in, e.g.</p>
+<div class="quarto-title-meta">
+  </div>
+</header>
+  </div>
+  <div class="about-contents"><main class="content" id="quarto-document-content">
 <ul>
-<li><span class="math inline">\(\Sigma_1 \succ \Sigma_{2}\)</span>, i.e.&nbsp;<span class="math inline">\(\Sigma_1 - \Sigma_2\)</span> is postive definite, or</li>
-<li><span class="math inline">\(\operatorname{trace} \left( \Sigma_{1} \right) &gt; \operatorname{trace} \left( \Sigma_{2} \right)\)</span>, i.e.&nbsp;the asymptotic mean squared error (MSE) is smaller for <span class="math inline">\(\psi_2\)</span>.</li>
+<li>Stefan Heyder</li>
+<li>Wiesenweg 21, 98693 Ilmenau</li>
+<li><a href="mailto:stefan.heyder@gmail.com">stefan.heyder@gmail.com</a></li>
 </ul>
-<p>Usually the asymptotic covariance matrix <span class="math inline">\(\Sigma\)</span> is not known, usually because it depends on either the true parameter <span class="math inline">\(\psi\)</span>. For a toy example, consider the normal distribution <span class="math inline">\(\mathcal N(\mu, \sigma^2)\)</span> where the mean <span class="math inline">\(\mu \in \mathbf R\)</span> and variance is <span class="math inline">\(\sigma^2 \in \mathbf R_{&gt; 0}\)</span>. Then the sample mean <span class="math inline">\(\bar X_{N}\)</span> for samples <span class="math inline">\(X_{1}, \dots, X_{N} \stackrel{\text{i.i.d.}}{\sim} \mathcal N(\mu, \sigma^{2})\)</span> as an estimator of <span class="math inline">\(\mu\)</span> fulfills a central limit theorem: <span class="math display">\[
-\sqrt{N} (\bar X_{N} - \mu) \stackrel{\mathcal D}\to \mathcal N(0, \sigma^{2}).
-\]</span> Here <span class="math inline">\(\sigma^2\)</span> may be unknown. In practice we can estimate it consistently by the sample variance <span class="math inline">\(\hat \sigma_N^{2}\)</span>, and so <span class="math display">\[
-\frac{\sqrt{N}}{\sqrt{\hat \sigma_{N}^2}} \left( \bar X_{N} - \mu \right) \stackrel{\mathcal D}\to \mathcal N(0,1),
-\]</span> by Slutsky’s lemma. Thus, for large <span class="math inline">\(N\)</span>, we can the true asymptotic variance <span class="math inline">\(\sigma^2\)</span> by its consistent estimate <span class="math inline">\(\hat\sigma_N^2\)</span>, and proceed as above.</p>
-</section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s next?</h2>
-<p>In this post, I’ve tried to convey the usefulness of asymptotics, especially when it comes to comparing two estimators <span class="math inline">\(\psi\)</span>. However, I have not given you any guidance on when an estimator is consistent and when it fulfills a central limit theorem. It turns out, that for many types of estimators we can obtain, under some assumptions, central limit theorems. These settings I will discuss in a following post.</p>
 
 
-</section>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>2<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main></div>
+</div>
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -272,13 +159,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
@@ -333,7 +213,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/stefanheyder\.netlify\.app");
+      var filterRegex = new RegExp("https:\/\/stefanheyder\.dev");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

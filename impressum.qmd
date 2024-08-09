@@ -1,0 +1,9 @@
+---
+title: "Impressum"
+about:
+  template: trestles
+---
+
+- Stefan Heyder
+- Wiesenweg 21, 98693 Ilmenau
+- [stefan.heyder@gmail.com](mailto:stefan.heyder@gmail.com)

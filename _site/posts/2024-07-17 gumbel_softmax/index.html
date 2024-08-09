@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stefan Heyder">
-<meta name="dcterms.date" content="2024-07-07">
+<meta name="dcterms.date" content="2024-07-17">
 
-<title>Blog - Consistency</title>
+<title>Statistical Ramblings - The Gumbel softmax trick</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +22,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -130,7 +144,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Blog</span>
+    <span class="navbar-title">Statistical Ramblings</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -143,8 +157,17 @@ window.Quarto = {
     <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About this blog</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../impressum.html"> 
+<span class="menu-text">Impressum</span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/stefanheyder"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -159,7 +182,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Consistency</h1>
+      <h1 class="title">The Gumbel softmax trick</h1>
                       </div>
   </div>
     
@@ -176,7 +199,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 7, 2024</p>
+        <p class="date">July 17, 2024</p>
       </div>
     </div>
     
@@ -197,24 +220,146 @@ window.Quarto = {
 
 
 
-<p>After discussing the reason for asymptotics in [asymptotics], I want to elaborate a bit more on both consistency and central limit theorems for estimators. In particular, I want to demonstrate proof techniques for showing that an estimator is consistent. Depending on the estimator at hand, these may apply or not.</p>
-<section id="notation-and-setting" class="level1 page-columns page-full">
-<h1>Notation and setting</h1>
-<p>Let’s start with the setup for this post. Consider a parametric family of probability measures <span class="math inline">\((\mathbf P_{\theta})_{\theta\in\Theta}\)</span> on <span class="math inline">\(\mathbf R^n\)</span> where the set of parameters is <span class="math inline">\(k\)</span>-dimensional <span class="math inline">\(\Theta \subseteq \mathbf R^k\)</span>. We’ll require that the family is identifiable, otherwise consistent estimators cannot exist. Let us call the true parameter <span class="math inline">\(\theta_0\in\mathbf R^{k}\)</span>.</p>
-<div class="page-columns page-full"><p>We start with the approach found in <span class="citation" data-cites="Lehmann1998Theory">(<a href="#ref-Lehmann1998Theory" role="doc-biblioref">Lehmann and Casella 1998</a>)</span> to prove the consistency of maximum likelihood estimators (MLE). Actually, with a few additional assumptions (that are fulfilled for MLEs), we can extend their argument to so-called Z-estimators. Z-estimators are estimators that are defined as zeros of so-called estimating equations. These are functions <span class="math inline">\(f_{N}: (\mathbf R^{n})^{N} \times \mathbf R^{k} \to \mathbf R^{l}\)</span> of the observed data <span class="math inline">\(X_1, \dots, X_N \stackrel{\text{i.i.d}}{\sim} \mathbf P_{\theta_{0}}\)</span> and parameters <span class="math inline">\(\theta \in \Theta\)</span>. If <span class="math inline">\(\hat \theta_N\)</span> is an estimator of <span class="math inline">\(\theta\)</span> defined by </p><div class="no-row-height column-margin column-container"><span class="margin-aside">Sometimes we can relax the right-hand side to be only <span class="math inline">\(o_{\mathbf P}(1)\)</span>, but that will not be necessary.</span></div></div>
-<p><span class="math display">\[
-f_N \left(X_{1}, \dots, X_{N}, \hat\theta_{N} \right) = 0.
+<p>I recently learned about the Gumbel softmax trick, which seemingly allows smooth sampling from a discrete distribution. In writing this post, I want to learn more about the Gumbel distribution that appears in this trick, as well as the trick itself.</p>
+<section id="the-gumbel-distribution" class="level1 page-columns page-full">
+<h1>The Gumbel Distribution</h1>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition (Gumbel distribution)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For <span class="math inline">\(\mu \in \mathbf R\)</span> and <span class="math inline">\(\beta \in \mathbf R_{&gt; 0}\)</span> the $ (, )$ distribution has the CDF <span class="math display">\[
+\begin{align*}
+    F: (-\infty, \infty) \to (0, 1) &amp;&amp; x \mapsto \exp \left( -\exp \left( - \frac{x - \mu}{\beta} \right)  \right).
+\end{align*}
 \]</span></p>
-
+</div>
+</div>
+<p>Let us quickly ensure that this defines a distribution: this CDF is strictly monotonically increasing and for <span class="math inline">\(x \to -\infty\)</span> it goes to <span class="math inline">\(0\)</span>, while for <span class="math inline">\(x \to \infty\)</span> it goes to <span class="math inline">\(\exp(0) = 1\)</span>. By differentiating the CDF we obtain the density (with respect to Lebesgue measure), which is <span class="math display">\[
+\frac{1}{\beta} \exp \left( - \frac{x - \mu}{\beta} -\exp \left( - \frac{x - \mu}{\beta} \right) \right)
+\]</span></p>
+<p>Simulating from this distribution is straight-forward using the inverse CDF trick: simulate <span class="math inline">\(U \sim \operatorname{Unif}(0,1)\)</span> and let <span class="math display">\[G = F^{-1}(U) = -\beta\log( -\log (U))  + \mu,\]</span> then <span class="math inline">\(G \sim \operatorname{Gumbel}(\mu, \beta)\)</span>. Let’s draw some samples from the standard Gumbel distribution, i.e.&nbsp;where <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\beta = 1\)</span>.</p>
+<div id="cell-3" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sim_gumbel(n, mu, beta):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span> beta <span class="op">*</span> np.log(<span class="op">-</span>np.log(np.random.uniform(size<span class="op">=</span>n))) <span class="op">+</span> mu</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> density_gumbel(x,mu,beta):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">1</span><span class="op">/</span>beta) <span class="op">*</span> np.exp(<span class="op">-</span>(x<span class="op">-</span>mu)<span class="op">/</span>beta<span class="op">-</span>np.exp(<span class="op">-</span>(x<span class="op">-</span>mu)<span class="op">/</span>beta))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>sims <span class="op">=</span> sim_gumbel(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>xmin, xmax <span class="op">=</span> <span class="bu">min</span>(sims), <span class="bu">max</span>(sims)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.hist(sims, bins<span class="op">=</span><span class="dv">30</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.plot(np.linspace(xmin, xmax, <span class="dv">1000</span>), density_gumbel(np.linspace(xmin, xmax, <span class="dv">1000</span>), <span class="dv">0</span>, <span class="dv">1</span>), <span class="st">'r'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(sims)<span class="sc">}</span><span class="ss"> Gumbel(0,1) draws with mean </span><span class="sc">{</span>np<span class="sc">.</span>mean(sims)<span class="sc">:.2f}</span><span class="ss"> and standard deviation </span><span class="sc">{</span>np<span class="sc">.</span>std(sims)<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.axvline(np.mean(sims), color<span class="op">=</span><span class="st">'grey'</span>, lw<span class="op">=</span><span class="dv">2</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p>From these simulations and the right skew visible in the density, we can guess that the mean of the standard Gumbel is not <span class="math inline">\(0\)</span>. Indeed, if <span class="math inline">\(G \sim \operatorname{Gumbel}(0,1)\)</span>, then  <span class="math display">\[
+    \mathbf E G = \int_{0}^1 F^{-1}(u) \mathrm d u = \int_{0}^1 -\log( - \log u) \mathrm d u = \gamma \approx 0.5772,
+\]</span> where <span class="math inline">\(\gamma\)</span> is the Euler-Mascheroni constant.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">see <a href="https://en.wikipedia.org/wiki/Euler%27s_constant#Integrals">wikipedia</a>, I have not been able to find a concrete proof of this yet</span></div></div>
+<p>From the definition, we can see that the Gumbel distributions form a location-scale family, i.e.&nbsp;if <span class="math inline">\(G \sim  \operatorname{Gumbel}(\mu, \beta)\)</span>, then <span class="math inline">\(aG + b \sim \operatorname{Gumbel}(a\mu + b, a^2\beta)\)</span>. Similar to the normal distribution, this allows us to focus on the standard Gumbel distribution <span class="math inline">\(\operatorname{Gumbel}(0,1)\)</span>.</p>
+<p>The origins of the Gumbel distribution go back to the early 1930s, when Gumbel discovered the distribution as a limiting distribution of the maximum i.i.d. exponentially distributed samples. This makes the Gumbel distribution one of the three GEV (generalized extreme value) distributions, the others being the Fréchet and the reverse Weibull distribution.</p>
+<div class="icon-false callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Theorem (limit theorem for the Gumbel distribution)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For <span class="math inline">\(i \in \mathbf N\)</span> let <span class="math inline">\(X_i \stackrel{\text{i.i.d.}}{\sim} \operatorname{Exp}(1)\)</span> and let <span class="math inline">\(Y_n = \max \{X_1, \dots, X_n\}\)</span> be the maximum value in the first <span class="math inline">\(n\)</span> samples. Then, as <span class="math inline">\(n \to \infty\)</span>, <span class="math display">\[
+    Y_{n} - \log n \stackrel{\mathcal D}{\longrightarrow} \operatorname{Gumbel}(0, 1).
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The CDF of <span class="math inline">\(Y_n - \log n\)</span> is, for <span class="math inline">\(y \geq - \log n\)</span>, <span class="math display">\[
+\begin{align*}
+    \mathbf P \left( Y_{n} - \log n \leq y \right) &amp;=  \mathbf P \left( Y_{n} \leq y + \log n \right) = (1 - \exp(-(y + \log n)))^{n} \\
+    &amp;= \left(1 - \frac{\exp(-y)}{n}\right)^{n}\to \exp(-\exp(-y)) = F(y).
+\end{align*}
+\]</span></p>
+</div>
+</div>
+</div>
+<p>Again, let’s verify by simulation that this is true, comparing to the density of the standard Gumbel distribution.</p>
+<div id="cell-6" class="cell" data-execution_count="54">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sim_exponential(n, lambd):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>lambd <span class="op">*</span> np.log(np.random.uniform(size<span class="op">=</span>n))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">3</span>,<span class="dv">2</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ns <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">100</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, n <span class="kw">in</span> <span class="bu">zip</span>(axs.flatten(), ns):</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> sim_exponential((m, n), <span class="dv">1</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    Y <span class="op">=</span> np.<span class="bu">max</span>(X, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    Z <span class="op">=</span> Y <span class="op">-</span> np.log(n)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    min_z, max_z <span class="op">=</span> <span class="bu">min</span>(Z), <span class="bu">max</span>(Z)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    ax.hist(Z, bins<span class="op">=</span><span class="dv">100</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    ax.plot(np.linspace(min_z, max_z, <span class="dv">1000</span>), density_gumbel(np.linspace(min_z, max_z, <span class="dv">1000</span>), <span class="dv">0</span>, <span class="dv">1</span>), <span class="st">'r'</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"distribution of $Y_</span><span class="ch">{{</span><span class="ss"> </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> </span><span class="ch">}}</span><span class="ss"> - </span><span class="ch">\\</span><span class="ss">log </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">$"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mode of gumbel distribution is at mu</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="dv">0</span>, <span class="fl">1.2</span><span class="op">*</span> density_gumbel(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, already for <span class="math inline">\(n=10\)</span> there is good fit between the distribution of <span class="math inline">\(Y_n - \log n\)</span> and <span class="math inline">\(\operatorname{Gumbel}(0, 1)\)</span>.</p>
+</section>
+<section id="the-gumbel-softmax-trick" class="level1">
+<h1>The Gumbel softmax trick</h1>
+<ul>
+<li>why? want categorical sampling in NNs, but training is difficult</li>
+<li>why? want to sample from categorical distribution, but that is expensive if there are many categories</li>
+</ul>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-Lehmann1998Theory" class="csl-entry" role="listitem">
-Lehmann, E. L., and George Casella. 1998. <em>Theory of Point Estimation</em>. 2nd ed. Springer Texts in Statistics. New York: Springer.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -296,7 +441,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/stefanheyder\.netlify\.app");
+      var filterRegex = new RegExp("https:\/\/www\.stefanheyder\.dev");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

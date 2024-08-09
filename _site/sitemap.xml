@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://stefanheyder.netlify.app/about.html</loc>
+    <loc>https://stefanheyder.dev/impressum.html</loc>
+    <lastmod>2024-07-14T17:35:58.789Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stefanheyder.dev/index.html</loc>
+    <lastmod>2024-07-17T19:42:25.177Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stefanheyder.dev/posts/2024-07-07 asymptotics/index.html</loc>
+    <lastmod>2024-07-12T09:43:25.354Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index.html</loc>
+    <lastmod>2024-07-17T20:06:45.599Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index.html</loc>
+    <lastmod>2024-08-09T12:19:03.238Z</lastmod>
+  </url>
+  <url>
+    <loc>https://stefanheyder.dev/about.html</loc>
     <lastmod>2023-11-28T08:40:06.586Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stefanheyder.netlify.app/posts/asymptotics/index.html</loc>
-    <lastmod>2024-07-07T10:40:10.885Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stefanheyder.netlify.app/posts/fisherian-reduction-t-Test/index.html</loc>
-    <lastmod>2024-04-05T20:21:10.047Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stefanheyder.netlify.app/index.html</loc>
-    <lastmod>2024-04-05T20:15:30.947Z</lastmod>
   </url>
 </urlset>

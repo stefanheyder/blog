@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Stefan Heyder">
+<meta name="dcterms.date" content="2022-02-08">
 
-<title>Statistical Ramblings - Posts</title>
+<title>Statistical Ramblings - Fisherian reduction for the t-Test</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +22,79 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,35 +122,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -128,17 +153,17 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Statistical Ramblings" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Statistical Ramblings</span>
     </a>
   </div>
@@ -149,11 +174,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About this blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./impressum.html"> 
+    <a class="nav-link" href="../../impressum.html"> 
 <span class="menu-text">Impressum</span></a>
   </li>  
   <li class="nav-item compact">
@@ -162,7 +187,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -176,137 +201,103 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Posts</h1>
+    <div class="quarto-title column-body">
+      <h1 class="title">Fisherian reduction for the t-Test</h1>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Stefan Heyder </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 8, 2022</p>
+      </div>
+    </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">November 28, 2023</p>
+      </div>
+    </div>
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p>In the second chapter of <span class="citation" data-cites="Cox2006Principles">(<a href="#ref-Cox2006Principles" role="doc-biblioref">Cox 2006</a>)</span> the authors talks about a <em>Fisherian reduction</em> which I think of as a framework of doing inference given a sufficient statistic <span class="math inline">\(S\)</span>. An interesting point here is that one can use the conditional distribution of the data, <span class="math inline">\(X_1, \dots, X_n\)</span> say, on <span class="math inline">\(S\)</span> to evaluate the fit of the model.</p>
+<p>In this post I want to explore this concept in the setting of a standard <span class="math inline">\(t\)</span>-Test, i.e.&nbsp;we have <span class="math inline">\(X_i \overset{\text{i.i.d}}{\sim} \mathcal N(\mu, \sigma^2)\)</span>. The parameter of interest is of course <span class="math inline">\(\mu\)</span> and <span class="math inline">\(S = (\bar X_n, \hat\sigma^2_{n})\)</span> is a sufficient statistic, with <span class="math inline">\(\hat\sigma^2_n\)</span> the empirical variance.</p>
+<p>To apply the <em>Fisherian reduction</em> we thus need to find the conditional distribution of <span class="math inline">\(X = \left(X_1, \dots, X_n\right)\)</span> on <span class="math inline">\(\bar X_n\)</span>, i.e.<span class="math inline">\(X | \bar X_n\)</span>. For this, let <span class="math inline">\(A = \left(A_1, B\right)  \in \mathbf R^{n\times n}\)</span> be an orthogonal matrix whose first column is <span class="math display">\[A_1 = \left(\frac 1 {\sqrt{n}}, \dots , \frac 1 {\sqrt{n}} \right).\]</span></p>
+<p>Then <span class="math inline">\(Y = A^TX \sim \mathcal N \left(\mu A^T\mu \mathbf 1, \sigma^2 I_{n}\right)\)</span> and <span class="math inline">\(Y = \left(\sqrt{n} \bar X_n, Z\right)\)</span> where <span class="math inline">\(Z \sim \mathcal N \left(\sigma^2 I_{n - 1}\right)\)</span>, <span class="math inline">\(Z\)</span> and <span class="math inline">\(\bar X_n\)</span> being independent.</p>
+<p>Transforming back we obtain the conditional distribution we sought: <span class="math display">\[ X | \bar X_n \sim AY | \bar X_n \mathbf 1 \sim \bar X_n + B Z\]</span></p>
+<p>The catch here is that <span class="math inline">\(B\)</span> is a <span class="math inline">\(n\times (n - 1)\)</span> dimensional matrix, so <span class="math inline">\(X | \bar X_n\)</span> has a normal distribution of dimension <span class="math inline">\(n-1\)</span>, e.g.&nbsp;the variance-covariance matrix is rank-deficient.</p>
+<p>Let’s verify this through simulation.</p>
+<div id="cell-2" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> m, mu, sigma), <span class="at">nrow=</span> n)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">t</span>(x) <span class="sc">-</span> <span class="fu">colMeans</span>(x))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>transformed <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span>), <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span>)), <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">%*%</span> y)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y[<span class="dv">1</span>,], y[<span class="dv">2</span>,])</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(transformed)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">mean</span>(transformed))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sd</span>(transformed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.007553103
+[1] 1.05018</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="" data-listing-date-sort="1723154400000" data-listing-file-modified-sort="1723205943238" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="866">
-<div class="thumbnail">
-<p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a></p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a></p>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Cox2006Principles" class="csl-entry" role="listitem">
+Cox, D. R. 2006. <em>Principles of Statistical Inference</em>. Cambridge ; New York: Cambridge University Press.
 </div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">The Gumbel distribution</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">I recently learned about the Gumbel softmax trick, which seemingly allows smooth sampling from a discrete distribution. In writing this post, I want to learn more about the…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">
-<div class="listing-date">
-Aug 9, 2024
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="" data-listing-date-sort="1720216800000" data-listing-file-modified-sort="1720777405354" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="877">
-<div class="thumbnail">
-<p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a></p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">Asymptotics of estimators</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">In my PhD thesis, I compare two methods to perform optimal importance sampling: the Cross-Entropy method (CE) and Efficient Importance Sampling (EIS). There are several…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">
-<div class="listing-date">
-Jul 6, 2024
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="" data-listing-date-sort="1644274800000" data-listing-file-modified-sort="1721246805599" data-listing-date-modified-sort="1701126000000" data-listing-reading-time-sort="2" data-listing-word-count-sort="250">
-<div class="thumbnail">
-<p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a></p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">Fisherian reduction for the t-Test</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">In the second chapter of <span class="citation" data-cites="Cox2006Principles">(Cox 2006)</span> the authors talks about a <em>Fisherian reduction</em> which I think of as a framework of doing inference given a sufficient statistic <span class="math inline">\(S\)</span>. An…<span class="math inline"></span><span class="math inline"></span></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">
-<div class="listing-date">
-Feb 8, 2022
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

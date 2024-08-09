@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Statistical Ramblings</title>
+<link>https://stefanheyder.dev/</link>
+<atom:link href="https://stefanheyder.dev/index.xml" rel="self" type="application/rss+xml"/>
+<description>Blog</description>
+<generator>quarto-1.4.553</generator>
+<lastBuildDate>Thu, 08 Aug 2024 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Gumbel distribution</title>
+  <dc:creator>Stefan Heyder</dc:creator>
+  <link>https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>I recently learned about the Gumbel softmax trick, which seemingly allows smooth sampling from a discrete distribution. In writing this post, I want to learn more about the Gumbel distribution that appears in this trick, details on the trick may follow in a separate post.</p>
+<p>The main component in the softmax trick is the following distribution, due to Gumbel (aptly named after him).</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition (Gumbel distribution)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For <img src="https://latex.codecogs.com/png.latex?%5Cmu%20%5Cin%20%5Cmathbf%20R"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20%5Cin%20%5Cmathbf%20R_%7B%3E%200%7D"> the $ (, )$ distribution has the CDF <img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0A%20%20%20%20F:%20(-%5Cinfty,%20%5Cinfty)%20%5Cto%20(0,%201)%20&amp;&amp;%20x%20%5Cmapsto%20%5Cexp%20%5Cleft(%20-%5Cexp%20%5Cleft(%20-%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20%5Cright)%20%20%5Cright).%0A%5Cend%7Balign*%7D%0A"></p>
+</div>
+</div>
+<p>Let us quickly ensure that this defines a distribution: this CDF is strictly monotonically increasing and for <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20-%5Cinfty"> it goes to <img src="https://latex.codecogs.com/png.latex?0">, while for <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20%5Cinfty"> it goes to <img src="https://latex.codecogs.com/png.latex?%5Cexp(0)%20=%201">. By differentiating the CDF we obtain the density (with respect to Lebesgue measure), which is <img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7B1%7D%7B%5Cbeta%7D%20%5Cexp%20%5Cleft(%20-%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20-%5Cexp%20%5Cleft(%20-%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20%5Cright)%20%5Cright),%0A"> so the distribution is a continuous one.</p>
+<p>Simulating from this distribution is straight-forward using the inverse CDF trick: simulate <img src="https://latex.codecogs.com/png.latex?U%20%5Csim%20%5Coperatorname%7BUnif%7D(0,1)"> and let <img src="https://latex.codecogs.com/png.latex?G%20=%20F%5E%7B-1%7D(U)%20=%20-%5Cbeta%5Clog(%20-%5Clog%20(U))%20%20+%20%5Cmu,"> then <img src="https://latex.codecogs.com/png.latex?G%20%5Csim%20%5Coperatorname%7BGumbel%7D(%5Cmu,%20%5Cbeta)">. Let’s draw some samples from the standard Gumbel distribution, i.e.&nbsp;where <img src="https://latex.codecogs.com/png.latex?%5Cmu%20=%200"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20=%201">.</p>
+<div id="cell-4" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sim_gumbel(n, mu, beta):</span>
+<span id="cb1-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> beta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.log(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>np.log(np.random.uniform(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>n))) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> mu</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> density_gumbel(x,mu,beta):</span>
+<span id="cb1-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>beta) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.exp(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>mu)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>beta<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>np.exp(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>mu)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>beta))</span>
+<span id="cb1-9"></span>
+<span id="cb1-10">sims <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sim_gumbel(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-11">xmin, xmax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(sims), <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(sims)</span>
+<span id="cb1-12">plt.hist(sims, bins<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'black'</span>, density<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb1-13">plt.plot(np.linspace(xmin, xmax, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>), density_gumbel(np.linspace(xmin, xmax, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'r'</span>)</span>
+<span id="cb1-14">plt.title(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sims)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> Gumbel(0,1) draws with mean </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>np<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>mean(sims)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> and standard deviation </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>np<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>std(sims)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-15">plt.axvline(np.mean(sims), color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'grey'</span>, lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>)</span>
+<span id="cb1-16">plt.show()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p>From these simulations and the right skew visible in the density, we can guess that the mean of the standard Gumbel is not <img src="https://latex.codecogs.com/png.latex?0">. Indeed, if <img src="https://latex.codecogs.com/png.latex?G%20%5Csim%20%5Coperatorname%7BGumbel%7D(0,1)">, then  <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Cmathbf%20E%20G%20=%20%5Cint_%7B0%7D%5E1%20F%5E%7B-1%7D(u)%20%5Cmathrm%20d%20u%20=%20%5Cint_%7B0%7D%5E1%20-%5Clog(%20-%20%5Clog%20u)%20%5Cmathrm%20d%20u%20=%20%5Cgamma%20%5Capprox%200.5772,%0A"> where <img src="https://latex.codecogs.com/png.latex?%5Cgamma"> is the Euler-Mascheroni constant.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">see <a href="https://en.wikipedia.org/wiki/Euler%27s_constant#Integrals">wikipedia</a>, I have not been able to find a concrete proof of this yet</span></div></div>
+<p>From the definition, we can see that the Gumbel distributions form a location-scale family, i.e.&nbsp;if <img src="https://latex.codecogs.com/png.latex?G%20%5Csim%20%20%5Coperatorname%7BGumbel%7D(%5Cmu,%20%5Cbeta)">, then <img src="https://latex.codecogs.com/png.latex?aG%20+%20b%20%5Csim%20%5Coperatorname%7BGumbel%7D(a%5Cmu%20+%20b,%20a%5E2%5Cbeta)">. Similar to the normal distribution, this allows us to focus on the standard Gumbel distribution <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BGumbel%7D(0,1)">.</p>
+<p>The origins of the Gumbel distribution go back to the early 1930s, when Gumbel discovered the distribution as a limiting distribution of the maximum i.i.d. exponentially distributed samples. This makes the Gumbel distribution one of the three GEV (generalized extreme value) distributions, the others being the Fréchet and the reverse Weibull distribution. Actually, if <img src="https://latex.codecogs.com/png.latex?X%20%5Csim%20%5Coperatorname%7BGumbel%7D(0,1)">, then <img src="https://latex.codecogs.com/png.latex?%5Cexp%20(X)"> and <img src="https://latex.codecogs.com/png.latex?-%20%5Cexp(-X)"> follow a Fréchet and a reverse Weibull distribution respectively.</p>
+<div class="icon-false callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Theorem (limit theorem for the Gumbel distribution)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For <img src="https://latex.codecogs.com/png.latex?i%20%5Cin%20%5Cmathbf%20N"> let <img src="https://latex.codecogs.com/png.latex?X_i%20%5Cstackrel%7B%5Ctext%7Bi.i.d.%7D%7D%7B%5Csim%7D%20%5Coperatorname%7BExp%7D(1)"> and let <img src="https://latex.codecogs.com/png.latex?Y_n%20=%20%5Cmax%20%5C%7BX_1,%20%5Cdots,%20X_n%5C%7D"> be the maximum value in the first <img src="https://latex.codecogs.com/png.latex?n"> samples. Then, as <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty">, <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20Y_%7Bn%7D%20-%20%5Clog%20n%20%5Cstackrel%7B%5Cmathcal%20D%7D%7B%5Clongrightarrow%7D%20%5Coperatorname%7BGumbel%7D(0,%201).%0A"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The CDF of <img src="https://latex.codecogs.com/png.latex?Y_n%20-%20%5Clog%20n"> is, for <img src="https://latex.codecogs.com/png.latex?y%20%5Cgeq%20-%20%5Clog%20n">, <img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0A%20%20%20%20%5Cmathbf%20P%20%5Cleft(%20Y_%7Bn%7D%20-%20%5Clog%20n%20%5Cleq%20y%20%5Cright)%20&amp;=%20%20%5Cmathbf%20P%20%5Cleft(%20Y_%7Bn%7D%20%5Cleq%20y%20+%20%5Clog%20n%20%5Cright)%20=%20(1%20-%20%5Cexp(-(y%20+%20%5Clog%20n)))%5E%7Bn%7D%20%5C%5C%0A%20%20%20%20&amp;=%20%5Cleft(1%20-%20%5Cfrac%7B%5Cexp(-y)%7D%7Bn%7D%5Cright)%5E%7Bn%7D%5Cto%20%5Cexp(-%5Cexp(-y))%20=%20F(y).%0A%5Cend%7Balign*%7D%0A"></p>
+</div>
+</div>
+</div>
+<p>Again, let’s verify by simulation that this is true, comparing to the density of the standard Gumbel distribution.</p>
+<div id="cell-7" class="cell" data-execution_count="54">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> sim_exponential(n, lambd):</span>
+<span id="cb2-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>lambd <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.log(np.random.uniform(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>n))</span>
+<span id="cb2-3"></span>
+<span id="cb2-4"></span>
+<span id="cb2-5">fig, axs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb2-6">fig.tight_layout()</span>
+<span id="cb2-7">ns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>]</span>
+<span id="cb2-8">m <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span></span>
+<span id="cb2-9"></span>
+<span id="cb2-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> ax, n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(axs.flatten(), ns):</span>
+<span id="cb2-11">    X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sim_exponential((m, n), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-12">    Y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(X, axis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-13">    Z <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> np.log(n)</span>
+<span id="cb2-14">    min_z, max_z <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(Z), <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(Z)</span>
+<span id="cb2-15">    ax.hist(Z, bins<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, density<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb2-16">    ax.plot(np.linspace(min_z, max_z, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>), density_gumbel(np.linspace(min_z, max_z, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'r'</span>)</span>
+<span id="cb2-17">    ax.set_title(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"distribution of $Y_</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">{{</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>n<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">}}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> - </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\\</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">log </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>n<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">$"</span>)</span>
+<span id="cb2-18">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># mode of gumbel distribution is at mu</span></span>
+<span id="cb2-19">    ax.set_ylim(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> density_gumbel(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb2-20"></span>
+<span id="cb2-21">plt.show()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, already for <img src="https://latex.codecogs.com/png.latex?n=10"> there is good fit between the distribution of <img src="https://latex.codecogs.com/png.latex?Y_n%20-%20%5Clog%20n"> and <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BGumbel%7D(0,%201)">.</p>
+<p>In the limit theorem, we had to subtract <img src="https://latex.codecogs.com/png.latex?%5Clog%20n"> from the maximum. Intuitively, this is necessary to ensure that the maximum does not diverge to <img src="https://latex.codecogs.com/png.latex?%5Cinfty">, so we obtain an actual distribution in the limit. This is similar to subtracting the mean in the central limit theorem (CLT).</p>
+<p>Similar to the CLT, the limit theorem holds for a much larger class of distributions, not just exponential distributions and similar to the CLT we have to stabilize the maxima to obtain a valid limit. The next theorem makes this precise.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Theorem (limit theorem for extrema) <span class="citation" data-cites="Johnson1994Continuous">(<strong>Johnson1994Continuous?</strong>)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <img src="https://latex.codecogs.com/png.latex?X_i,%20i%20%5Cin%20%5Cmathbf%20N"> be a sequence of i.i.d. random variables, let <img src="https://latex.codecogs.com/png.latex?Y_n%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_i"> be the running maximum and consider <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20Z_%7Bn%7D%20=%20Y_%7Bn%7D%20+%20b_%7Bn%7D.%0A"></p>
+<p>If <img src="https://latex.codecogs.com/png.latex?Z_n"> converges in distribution to a random variable <img src="https://latex.codecogs.com/png.latex?Z">, then <img src="https://latex.codecogs.com/png.latex?Z%20%5Csim%20%5Coperatorname%7BGumbel%7D()">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>By the properties of the CDF and the i.i.d. assumption, we have</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20F_%7BY_n%7D%20(y)%20=%20%5Cmathbf%20P%20%5Cleft(%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_i%20%5Cleq%20y%20%5Cright)%20%20=%20%5Cmathbf%20P%20%5Cleft(X_i%20%5Cleq%20y,%5C,%20i%20=%201,%20%5Cdots,%20n%5Cright)%20%20=%20(F_%7BX_1%7D(y))%5En.%0A"> Let <img src="https://latex.codecogs.com/png.latex?G"> be the CDF of the limiting distribution. Let <img src="https://latex.codecogs.com/png.latex?k%5Cin%5Cmathbf%20N"> and partition the first <img src="https://latex.codecogs.com/png.latex?k%5Ccdot%20n"> random variables into blocks of size <img src="https://latex.codecogs.com/png.latex?k">, i.e.&nbsp;</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Cbegin%7Balign*%7D%0A%20%20%20%20%20%20%20%20Y%5E%7Bj%7D_%7Bk%7D%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_%7B(j%20-%201)k%20+%20i%7D%20&amp;&amp;%20j%20=%201,%20%5Cdots,%20k,%0A%20%20%20%20%5Cend%7Balign*%7D%0A"> and let <img src="https://latex.codecogs.com/png.latex?Z%5Ej_k%20=%20Y%5Ej_k%20+%20b_k">. Then, as <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty"> <img src="https://latex.codecogs.com/png.latex?Z%5Ej_k%20%5Cstackrel%7B%5Cmathcal%20D%7D%7B%5Clongrightarrow%7D%20Z"> as well <strong>todo</strong> fix this</p>
+<p><img src="https://latex.codecogs.com/png.latex?Z_%7Bk%20%5Ccdot%20n%7D%20=%20%5Cmax_%7Bj%20=%201,%20%5Cdots,%20k%7D%20Z%5Ej_k"> and</p>
+</div>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <guid>https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</guid>
+  <pubDate>Thu, 08 Aug 2024 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Asymptotics of estimators</title>
+  <dc:creator>Stefan Heyder</dc:creator>
+  <link>https://stefanheyder.dev/posts/2024-07-07 asymptotics/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="page-columns page-full"><p>In my PhD thesis, I compare two methods to perform optimal importance sampling: the Cross-Entropy method (CE) and Efficient Importance Sampling (EIS). There are several criteria that you may want to consider for this comparison, but without going into too much detail , in this post, I’ll focus on only one aspect: asymptotics, in particular asymptotic relative efficiencies.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">If you’re interested, check out the <a href="https://github.com/stefanheyder/dissertation">draft of my thesis on Github.</a></span></div></div>
+<p>In the context of my thesis, this crops up as both methods are simulation-based. Usually, we have to resort to simulation techniques when analytical computation is too difficult, which is exactly the case here! Both methods actually want to solve an optimization problem in the background, solving for an optimal parameter <img src="https://latex.codecogs.com/png.latex?%5Cpsi">. Unfortunately, the optimization problems involve quantities that we have no (analytical) access to. We can, however, set up a simulation routine that provides an estimate <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi"> of this optimal parameter.</p>
+<p>But using simulations means that the output of both methods is now random, i.e.&nbsp;we can expect to get different results <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi"> when we repeatedly apply the methods using different RNG seeds. This can be problematic: if there is too much variation the actual <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi"> we obtain could be far away from the optimal <img src="https://latex.codecogs.com/png.latex?%5Cpsi"> and the performance of the methods suffers.</p>
+<p>This is where asymptotics come into play. When statisticians talk about asymptotics for estimators, here <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi">, they are usually concerned with two things: <em>consistency</em> and <em>asymptotic normality</em>. <em>Consistency</em> is a critical property of an estimator.</p>
+<section id="consistency" class="level1 page-columns page-full">
+<h1>Consistency</h1>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition (consistency)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <img src="https://latex.codecogs.com/png.latex?(%5Chat%5Cpsi_%7BN%7D)_%7BN%20%5Cin%20%5Cmathbf%20N%7D"> be a sequence of estimator of <img src="https://latex.codecogs.com/png.latex?%5Cpsi">. We say that <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi_%7BN%7D"> is weakly consistent if <img src="https://latex.codecogs.com/png.latex?%0A%5Chat%5Cpsi_%7BN%7D%20%5Cstackrel%7B%5Cmathbb%20P%7D%7B%5Cto%7D%20%5Cpsi%0A"> and strongly consistent, if <img src="https://latex.codecogs.com/png.latex?%0A%5Chat%20%5Cpsi_%7BN%7D%20%5Cstackrel%7B%5Ctext%7Ba.s.%7D%7D%7B%5Cto%7D%20%5Cpsi.%0A"></p>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><span class="margin-aside callout-margin-content">In the following I’ll be a little bit sloppy and identify <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi_%7BN%7D"> with the sequence of estimators <img src="https://latex.codecogs.com/png.latex?(%5Chat%5Cpsi_%7BN%7D)_%7BN%20%5Cin%20%5Cmathbf%20N%7D">.</span></div><p>Consistency captures the intuitive property that, as we increase the number of samples <img src="https://latex.codecogs.com/png.latex?N"> used in our simulation routine, the noisy estimate <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi_N"> should get closer and closer to the true <img src="https://latex.codecogs.com/png.latex?%5Cpsi">. Without consistency, our simulation routine is essentially useless.</p>
+<p>But consistency alone does not tell us how large we should choose our sample size <img src="https://latex.codecogs.com/png.latex?N">. For that, central limit theorems can help.</p>
+<section id="asymptotic-normality" class="level2">
+<h2 class="anchored" data-anchor-id="asymptotic-normality">Asymptotic normality</h2>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition (central limit theorem)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Again, let <img src="https://latex.codecogs.com/png.latex?(%5Chat%5Cpsi_%7BN%7D)_%7BN%20%5Cin%20%5Cmathbf%20N%7D"> be a sequence of estimator of <img src="https://latex.codecogs.com/png.latex?%5Cpsi">. If <img src="https://latex.codecogs.com/png.latex?%0A%5Csqrt%20%7BN%7D%20%5Cleft(%20%5Chat%20%5Cpsi_N%20-%20%5Cpsi%20%5Cright)%20%5Cstackrel%7B%5Cmathcal%20D%7D%7B%5Cto%7D%20%5Cmathcal%20N(0,%20%5CSigma),%0A"> we say that <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi_%7BN%7D"> fulfills a central limit theorem with asymptotic covariance matrix <img src="https://latex.codecogs.com/png.latex?%5CSigma">.</p>
+</div>
+</div>
+<p>If we have a consistent estimator, notice that <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi_N%20-%20%5Cpsi"> goes to <img src="https://latex.codecogs.com/png.latex?0"> as <img src="https://latex.codecogs.com/png.latex?N"> goes to <img src="https://latex.codecogs.com/png.latex?%5Cinfty"> (in probability or almost surely, depending on the type of consistency). Multiplying by <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7BN%7D"> “blows up” this error, essentially zooming in to what happens around the true value <img src="https://latex.codecogs.com/png.latex?%5Cpsi">. Note that any estimator that fulfills a central limit theorem is weakly consistent.</p>
+<p>Why should we assume a normal distribution as the limiting distribution? At first this choice may seem surprising, maybe even restrictive. But it turns out that for large classes of estimators, e.g.&nbsp;M- and Z-estimators, we can proof such a central limit theorem.</p>
+<p>How does having a central limit theorem help us? If we know <img src="https://latex.codecogs.com/png.latex?%5CSigma">, we can use it get a heuristic on how large we should choose <img src="https://latex.codecogs.com/png.latex?N">. Using the approximation <img src="https://latex.codecogs.com/png.latex?%0A%5Chat%5Cpsi_%7BN%7D%20-%5Cpsi%20%5Capprox%20%5Cmathcal%20N%5Cleft(0,%20%5Cfrac%7B%5CSigma%7D%7BN%7D%5Cright)%0A"> we can choose <img src="https://latex.codecogs.com/png.latex?N"> such that, e.g., for a given error <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%20%3E%200">, the probability that <img src="https://latex.codecogs.com/png.latex?%5ClVert%20%5Chat%20%5Cpsi_N%20-%20%5Cpsi%20%5CrVert%20%3C%20%5Cvarepsilon"> becomes, say, at least <img src="https://latex.codecogs.com/png.latex?80%5C%25">.</p>
+<p>Additionally, if we have two estimators <img src="https://latex.codecogs.com/png.latex?%5Chat%20%5Cpsi%5E1"> and <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpsi%5E%7B2%7D">, both of which fulfill a central limit theorem with asymptotic covariance matrices <img src="https://latex.codecogs.com/png.latex?%5CSigma_1"> and <img src="https://latex.codecogs.com/png.latex?%5CSigma_%7B2%7D">, we can compare <img src="https://latex.codecogs.com/png.latex?%5CSigma_1"> and <img src="https://latex.codecogs.com/png.latex?%5CSigma_2">. The estimator with the “smaller” asymptotic covariance matrix is the one we should prefer.</p>
+<p>As we are dealing with matrices it is not necessarily clear what smaller means, we could be interested in, e.g.</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?%5CSigma_1%20%5Csucc%20%5CSigma_%7B2%7D">, i.e.&nbsp;<img src="https://latex.codecogs.com/png.latex?%5CSigma_1%20-%20%5CSigma_2"> is postive definite, or</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Btrace%7D%20%5Cleft(%20%5CSigma_%7B1%7D%20%5Cright)%20%3E%20%5Coperatorname%7Btrace%7D%20%5Cleft(%20%5CSigma_%7B2%7D%20%5Cright)">, i.e.&nbsp;the asymptotic mean squared error (MSE) is smaller for <img src="https://latex.codecogs.com/png.latex?%5Cpsi_2">.</li>
+</ul>
+<p>Usually the asymptotic covariance matrix <img src="https://latex.codecogs.com/png.latex?%5CSigma"> is not known, usually because it depends on either the true parameter <img src="https://latex.codecogs.com/png.latex?%5Cpsi">. For a toy example, consider the normal distribution <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20N(%5Cmu,%20%5Csigma%5E2)"> where the mean <img src="https://latex.codecogs.com/png.latex?%5Cmu%20%5Cin%20%5Cmathbf%20R"> and variance is <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20%5Cin%20%5Cmathbf%20R_%7B%3E%200%7D">. Then the sample mean <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_%7BN%7D"> for samples <img src="https://latex.codecogs.com/png.latex?X_%7B1%7D,%20%5Cdots,%20X_%7BN%7D%20%5Cstackrel%7B%5Ctext%7Bi.i.d.%7D%7D%7B%5Csim%7D%20%5Cmathcal%20N(%5Cmu,%20%5Csigma%5E%7B2%7D)"> as an estimator of <img src="https://latex.codecogs.com/png.latex?%5Cmu"> fulfills a central limit theorem: <img src="https://latex.codecogs.com/png.latex?%0A%5Csqrt%7BN%7D%20(%5Cbar%20X_%7BN%7D%20-%20%5Cmu)%20%5Cstackrel%7B%5Cmathcal%20D%7D%5Cto%20%5Cmathcal%20N(0,%20%5Csigma%5E%7B2%7D).%0A"> Here <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2"> may be unknown. In practice we can estimate it consistently by the sample variance <img src="https://latex.codecogs.com/png.latex?%5Chat%20%5Csigma_N%5E%7B2%7D">, and so <img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7B%5Csqrt%7BN%7D%7D%7B%5Csqrt%7B%5Chat%20%5Csigma_%7BN%7D%5E2%7D%7D%20%5Cleft(%20%5Cbar%20X_%7BN%7D%20-%20%5Cmu%20%5Cright)%20%5Cstackrel%7B%5Cmathcal%20D%7D%5Cto%20%5Cmathcal%20N(0,1),%0A"> by Slutsky’s lemma. Thus, for large <img src="https://latex.codecogs.com/png.latex?N">, we can the true asymptotic variance <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2"> by its consistent estimate <img src="https://latex.codecogs.com/png.latex?%5Chat%5Csigma_N%5E2">, and proceed as above.</p>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s next?</h2>
+<p>In this post, I’ve tried to convey the usefulness of asymptotics, especially when it comes to comparing two estimators <img src="https://latex.codecogs.com/png.latex?%5Cpsi">. However, I have not given you any guidance on when an estimator is consistent and when it fulfills a central limit theorem. It turns out, that for many types of estimators we can obtain, under some assumptions, central limit theorems. These settings I will discuss in a following post.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>https://stefanheyder.dev/posts/2024-07-07 asymptotics/</guid>
+  <pubDate>Fri, 05 Jul 2024 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Fisherian reduction for the t-Test</title>
+  <dc:creator>Stefan Heyder</dc:creator>
+  <link>https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>In the second chapter of <span class="citation" data-cites="Cox2006Principles">(Cox 2006)</span> the authors talks about a <em>Fisherian reduction</em> which I think of as a framework of doing inference given a sufficient statistic <img src="https://latex.codecogs.com/png.latex?S">. An interesting point here is that one can use the conditional distribution of the data, <img src="https://latex.codecogs.com/png.latex?X_1,%20%5Cdots,%20X_n"> say, on <img src="https://latex.codecogs.com/png.latex?S"> to evaluate the fit of the model.</p>
+<p>In this post I want to explore this concept in the setting of a standard <img src="https://latex.codecogs.com/png.latex?t">-Test, i.e.&nbsp;we have <img src="https://latex.codecogs.com/png.latex?X_i%20%5Coverset%7B%5Ctext%7Bi.i.d%7D%7D%7B%5Csim%7D%20%5Cmathcal%20N(%5Cmu,%20%5Csigma%5E2)">. The parameter of interest is of course <img src="https://latex.codecogs.com/png.latex?%5Cmu"> and <img src="https://latex.codecogs.com/png.latex?S%20=%20(%5Cbar%20X_n,%20%5Chat%5Csigma%5E2_%7Bn%7D)"> is a sufficient statistic, with <img src="https://latex.codecogs.com/png.latex?%5Chat%5Csigma%5E2_n"> the empirical variance.</p>
+<p>To apply the <em>Fisherian reduction</em> we thus need to find the conditional distribution of <img src="https://latex.codecogs.com/png.latex?X%20=%20%5Cleft(X_1,%20%5Cdots,%20X_n%5Cright)"> on <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n">, i.e.<img src="https://latex.codecogs.com/png.latex?X%20%7C%20%5Cbar%20X_n">. For this, let <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Cleft(A_1,%20B%5Cright)%20%20%5Cin%20%5Cmathbf%20R%5E%7Bn%5Ctimes%20n%7D"> be an orthogonal matrix whose first column is <img src="https://latex.codecogs.com/png.latex?A_1%20=%20%5Cleft(%5Cfrac%201%20%7B%5Csqrt%7Bn%7D%7D,%20%5Cdots%20,%20%5Cfrac%201%20%7B%5Csqrt%7Bn%7D%7D%20%5Cright)."></p>
+<p>Then <img src="https://latex.codecogs.com/png.latex?Y%20=%20A%5ETX%20%5Csim%20%5Cmathcal%20N%20%5Cleft(%5Cmu%20A%5ET%5Cmu%20%5Cmathbf%201,%20%5Csigma%5E2%20I_%7Bn%7D%5Cright)"> and <img src="https://latex.codecogs.com/png.latex?Y%20=%20%5Cleft(%5Csqrt%7Bn%7D%20%5Cbar%20X_n,%20Z%5Cright)"> where <img src="https://latex.codecogs.com/png.latex?Z%20%5Csim%20%5Cmathcal%20N%20%5Cleft(%5Csigma%5E2%20I_%7Bn%20-%201%7D%5Cright)">, <img src="https://latex.codecogs.com/png.latex?Z"> and <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n"> being independent.</p>
+<p>Transforming back we obtain the conditional distribution we sought: <img src="https://latex.codecogs.com/png.latex?%20X%20%7C%20%5Cbar%20X_n%20%5Csim%20AY%20%7C%20%5Cbar%20X_n%20%5Cmathbf%201%20%5Csim%20%5Cbar%20X_n%20+%20B%20Z"></p>
+<p>The catch here is that <img src="https://latex.codecogs.com/png.latex?B"> is a <img src="https://latex.codecogs.com/png.latex?n%5Ctimes%20(n%20-%201)"> dimensional matrix, so <img src="https://latex.codecogs.com/png.latex?X%20%7C%20%5Cbar%20X_n"> has a normal distribution of dimension <img src="https://latex.codecogs.com/png.latex?n-1">, e.g.&nbsp;the variance-covariance matrix is rank-deficient.</p>
+<p>Let’s verify this through simulation.</p>
+<div id="cell-2" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">mu <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span>
+<span id="cb1-2">sigma <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb1-3">n <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb1-4">m <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb1-5">x <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rnorm</span>(n <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> m, mu, sigma), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">nrow=</span> n)</span>
+<span id="cb1-6"></span>
+<span id="cb1-7">y <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">t</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">t</span>(x) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colMeans</span>(x))</span>
+<span id="cb1-8"></span>
+<span id="cb1-9">transformed <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">nrow =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%*%</span> y)</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(y[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,], y[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,])</span>
+<span id="cb1-12"></span>
+<span id="cb1-13"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hist</span>(transformed)</span>
+<span id="cb1-14"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mean</span>(transformed))</span>
+<span id="cb1-15"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sd</span>(transformed))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.007553103
+[1] 1.05018</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-Cox2006Principles" class="csl-entry">
+Cox, D. R. 2006. <em>Principles of Statistical Inference</em>. Cambridge ; New York: Cambridge University Press.
+</div>
+</div></section></div> ]]></description>
+  <guid>https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</guid>
+  <pubDate>Mon, 07 Feb 2022 23:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

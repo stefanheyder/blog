@@ -2,8 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/asymptotics/index.html",
-      "/posts/fisherian-reduction-t-Test/index.html"
+      "/posts/2024-07-17 gumbel_distribution/index.html",
+      "/posts/2024-07-07 asymptotics/index.html",
+      "/posts/2022-02-08 fisherian_reduction/index.html"
     ]
   }
 ]

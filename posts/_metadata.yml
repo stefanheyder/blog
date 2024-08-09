@@ -7,3 +7,5 @@ code-fold: true
 
 # Enable banner style title blocks
 title-block-banner: true
+
+bibliography: ../blog.bib

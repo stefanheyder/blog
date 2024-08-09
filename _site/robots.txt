@@ -1,1 +1,1 @@
-Sitemap: https://stefanheyder.netlify.app/sitemap.xml
+Sitemap: https://stefanheyder.dev/sitemap.xml
