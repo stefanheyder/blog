@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistical Ramblings - Posts</title>
+<title>Statistical Ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -68,73 +66,15 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Statistical Ramblings" href="index.xml" data-external="1"></head>
+</head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -157,7 +97,7 @@ window.Quarto = {
 <span class="menu-text">Impressum</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications.html"> 
+    <a class="nav-link active" href="./publications.html" aria-current="page"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item compact">
@@ -178,139 +118,56 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Posts</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
 
 
+<section id="publications" class="level1">
+<h1>Publications</h1>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">2023</h2>
+<ul>
+<li>Brockhaus, E.K., Wolffram, D., Stadler, T., Osthege, M., Mitra, T., Littek, J.M., Krymova, E., Klesen, A.J., Huisman, J.S., Heyder, S., et al.&nbsp;(2023). <strong>Why are different estimates of the effective reproductive number so different? A case study on COVID-19 in Germany.</strong> PLOS Computational Biology 19, e1011653. <a href="https://doi.org/10.1371/journal.pcbi.1011653">https://doi.org/10.1371/journal.pcbi.1011653</a>.</li>
+<li>Heyder, S., and Hotz, T. (2023). <strong>Measures of COVID-19 Spread.</strong> In Covid-19 pandisziplinär und international: Gesundheitswissenschaftliche, gesellschaftspolitische und philosophische Hintergründe Medizin, Kultur, Gesellschaft., A. Kraemer and M. Medzech, eds.&nbsp;(Springer Fachmedien), pp.&nbsp;51–66. <a href="https://doi.org/10.1007/978-3-658-40525-0_3">https://doi.org/10.1007/978-3-658-40525-0_3</a>.</li>
+<li>Großmann, M., Bohm, S., Heyder, S., Schwarzburg, K., Kleinschmidt, P., Runge, E., and Hannappel, T. (2023). <strong>Generalized Modeling of Photoluminescence Transients.</strong> Physica Status Solidi (b) 260, 2200339. <a href="https://doi.org/10.1002/pssb.202200339">https://doi.org/10.1002/pssb.202200339</a>.</li>
+<li>Yeo, Y.L., Kirlangic, M.E., Heyder, S., Supriyanto, E., Mohamad Salim, M.I., Fiedler, P., and Haueisen, J. (2023). <strong>Linear versus Quadratic Detrending in Analyzing Simultaneous Changes in DC-EEG and Transcutaneous pCO2.</strong> In 2023 45th Annual International Conference of the IEEE Engineering in Medicine &amp; Biology Society (EMBC) (IEEE), pp.&nbsp;1–4. <a href="https://doi.org/10.1109/EMBC40787.2023.10340855">https://doi.org/10.1109/EMBC40787.2023.10340855</a>.</li>
+</ul>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">2022</h2>
+<ul>
+<li>Sherratt, K., Gruson, H., Grah, R., Johnson, H., Niehus, R., Prasse, B., Sandman, F., Deuschel, J., Wolffram, D., Abbott, S., et al.&nbsp;(2022). <strong>Predictive performance of multi-model ensemble forecasts of COVID-19 across European nations.</strong> Preprint at Epidemiology, <a href="https://doi.org/10.1101/2022.06.16.22276024">https://doi.org/10.1101/2022.06.16.22276024</a>.</li>
+<li>Bracher, J., Wolffram, D., Deuschel, J., Görgen, K., Ketterer, J.L., Ullrich, A., Abbott, S., Barbarossa, M.V., Bertsimas, D., Bhatia, S., et al.&nbsp;(2022). <strong>National and subnational short-term forecasting of COVID-19 in Germany and Poland during early 2021.</strong> Commun Med 2, 1–17. <a href="https://doi.org/10.1038/s43856-022-00191-8">https://doi.org/10.1038/s43856-022-00191-8</a>.</li>
+<li>Grundel, S., Heyder, S., Hotz, T., Ritschel, T.K.S., Sauerteig, P., and Worthmann, K. (2022). <strong>How Much Testing and Social Distancing is Required to Control COVID-19? Some Insight Based on an Age-Differentiated Compartmental Model.</strong> SIAM J. Control Optim. 60, S145–S169. <a href="https://doi.org/10.1137/20M1377783">https://doi.org/10.1137/20M1377783</a>.</li>
+<li>Xie, T., Köhler, M., Heyder, S., Günther, M., and Cao, J. (2022). <strong>Microfluidically-Assisted Isolation and Characterization of Achromobacter spanius from Soils for Microbial Degradation of Synthetic Polymers and Organic Solvents.</strong> Environments 9, 147. <a href="https://doi.org/10.3390/environments9120147">https://doi.org/10.3390/environments9120147</a>.</li>
+</ul>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2">2021</h2>
+<ul>
+<li>Burgard, J.P., Heyder, S., Hotz, T., and Krueger, T. (2021). <strong>Regional estimates of reproduction numbers with application to COVID-19.</strong> arXiv:2108.13842 [stat] (accepted for publication).</li>
+<li>Grundel, S.M., Heyder, S., Hotz, T., Ritschel, T.K.S., Sauerteig, P., and Worthmann, K. (2021). <strong>How to Coordinate Vaccination and Social Distancing to Mitigate SARS-CoV-2 Outbreaks.</strong> SIAM J. Appl. Dyn. Syst. 20, 1135–1157. <a href="https://doi.org/10.1137/20M1387687">https://doi.org/10.1137/20M1387687</a>.</li>
+<li>Bracher, J., Wolffram, D., Deuschel, J., Görgen, K., Ketterer, J.L., Ullrich, A., Abbott, S., Barbarossa, M.V., Bertsimas, D., Bhatia, S., et al.&nbsp;(2021). <strong>A pre-registered short-term forecasting study of COVID-19 in Germany and Poland during the second wave.</strong> Nat Commun 12, 5173. <a href="https://doi.org/10.1038/s41467-021-25207-0">https://doi.org/10.1038/s41467-021-25207-0</a>.</li>
+</ul>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3">2020</h2>
+<ul>
+<li>Hotz, T., Glock, M., Heyder, S., Semper, S., Böhle, A., and Krämer, A. (2020). <strong>Monitoring the spread of COVID-19 by estimating reproduction numbers over time.</strong> arXiv:2004.08557 [q-bio, stat].</li>
+<li>Miolane, N., Guigui, N., Brigant, A.L., Mathe, J., Hou, B., Thanwerdas, Y., Heyder, S., Peltre, O., Koep, N., Zaatiti, H., et al.&nbsp;(2020). <strong>Geomstats: A Python Package for Riemannian Geometry in Machine Learning.</strong> Journal of Machine Learning Research 21, 1–9.</li>
+</ul>
 
 
+</section>
+</section>
 
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="" data-listing-date-sort="1723154400000" data-listing-file-modified-sort="1723278875628" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1141">
-<div class="thumbnail">
-<p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a></p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">The Gumbel distribution</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">I recently learned about the Gumbel softmax trick, which seemingly allows smooth sampling from a discrete distribution. In writing this post, I want to learn more about the…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">
-<div class="listing-date">
-Aug 9, 2024
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="" data-listing-date-sort="1720216800000" data-listing-file-modified-sort="1720777405354" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="877">
-<div class="thumbnail">
-<p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a></p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">Asymptotics of estimators</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">In my PhD thesis, I compare two methods to perform optimal importance sampling: the Cross-Entropy method (CE) and Efficient Importance Sampling (EIS). There are several…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">
-<div class="listing-date">
-Jul 6, 2024
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="" data-listing-date-sort="1644274800000" data-listing-file-modified-sort="1721246805599" data-listing-date-modified-sort="1701126000000" data-listing-reading-time-sort="2" data-listing-word-count-sort="250">
-<div class="thumbnail">
-<p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a></p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">Fisherian reduction for the t-Test</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">In the second chapter of <span class="citation" data-cites="Cox2006Principles">(Cox 2006)</span> the authors talks about a <em>Fisherian reduction</em> which I think of as a framework of doing inference given a sufficient statistic <span class="math inline">\(S\)</span>. An…<span class="math inline"></span><span class="math inline"></span></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">
-<div class="listing-date">
-Feb 8, 2022
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

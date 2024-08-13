@@ -9,3 +9,5 @@ code-fold: true
 title-block-banner: true
 
 bibliography: ../blog.bib
+
+reference-location: margin

@@ -1,0 +1,47 @@
+---
+title: Publications
+---
+
+
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+library(knitr)
+suppressPackageStartupMessages({
+    library(tidyverse)
+})
+
+publications <- read_csv("data/own_publications.csv")
+
+render_publications <- function(publications) {
+    year <- year(publications[1,]$date)
+    cat(str_glue("## {year}\n"))
+    cat("\n")
+
+    for (i in seq(nrow(publications))) {
+        publication <- publications[i,]
+
+        authors <- publication$Author
+        date <- publication$Date
+        title <- publication$Title
+        journal <- publication$`Journal Abbreviation`
+        doi_link <- ifelse(publication$DOI, str_glue("https://doi.org/{publication$DOI}"), "")
+
+        cat(str_glue("-  {authors} ({date}). **{title}.** {journal}. {doi_link}."))
+        cat("\n")
+    }
+    cat("\n")
+}
+```
+
+
+```{r}
+#| echo: FALSE
+#| results: 'asis'
+publications %>%
+    arrange(desc(Date)) %>%
+    group_by(year = fct_rev(ordered(year(Date)))) %>%
+    group_walk(~ render_publications(.x))
+```

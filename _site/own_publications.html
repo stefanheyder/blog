@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistical Ramblings - Posts</title>
+<title>Statistical Ramblings - Publications</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,10 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      valueNames: ['listing-date','listing-title','listing-journal-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      page: 10,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
+      searchColumns: ["listing-date","listing-title","listing-journal-title"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -129,7 +130,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Statistical Ramblings" href="index.xml" data-external="1"></head>
+</head>
 
 <body class="nav-fixed">
 
@@ -157,7 +158,7 @@ window.Quarto = {
 <span class="menu-text">Impressum</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications.html"> 
+    <a class="nav-link active" href="./own_publications.html" aria-current="page"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item compact">
@@ -180,13 +181,13 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Posts</h1>
+    <div class="quarto-title column-page">
+      <h1 class="title">Publications</h1>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta column-page">
 
       
     
@@ -197,11 +198,9 @@ window.Quarto = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
@@ -211,105 +210,187 @@ window.Quarto = {
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="" data-listing-date-sort="1723154400000" data-listing-file-modified-sort="1723278875628" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1141">
-<div class="thumbnail">
-<p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a></p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a></p>
+<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-date-sort" data-direction="asc">
+          Issued - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Issued - Newest
+        </option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-journal-title" data-direction="asc">
+          Journal
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
 </div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">The Gumbel distribution</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">I recently learned about the Gumbel softmax trick, which seemingly allows smooth sampling from a discrete distribution. In writing this post, I want to learn more about the…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-07-17 gumbel_distribution/index.html" class="no-external">
-<div class="listing-date">
-Aug 9, 2024
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="" data-listing-date-sort="1720216800000" data-listing-file-modified-sort="1720777405354" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="877">
-<div class="thumbnail">
-<p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a></p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">Asymptotics of estimators</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">In my PhD thesis, I compare two methods to perform optimal importance sampling: the Cross-Entropy method (CE) and Efficient Importance Sampling (EIS). There are several…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2024-07-07 asymptotics/index.html" class="no-external">
-<div class="listing-date">
-Jul 6, 2024
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="" data-listing-date-sort="1644274800000" data-listing-file-modified-sort="1721246805599" data-listing-date-modified-sort="1701126000000" data-listing-reading-time-sort="2" data-listing-word-count-sort="250">
-<div class="thumbnail">
-<p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a></p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">Fisherian reduction for the t-Test</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-</div>
-<div class="listing-description">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">In the second chapter of <span class="citation" data-cites="Cox2006Principles">(Cox 2006)</span> the authors talks about a <em>Fisherian reduction</em> which I think of as a framework of doing inference given a sufficient statistic <span class="math inline">\(S\)</span>. An…<span class="math inline"></span><span class="math inline"></span></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2022-02-08 fisherian_reduction/index.html" class="no-external">
-<div class="listing-date">
-Feb 8, 2022
-</div>
-<div class="listing-author">
-Stefan Heyder
-</div>
-</a>
-</div>
-</div>
-</div>
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Issued</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-journal-title" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Journal</a>
+</th>
+</tr>
+</thead>
+<tbody class="list">
+<tr data-index="0" data-listing-date-sort="1672527600000" data-listing-title-sort="Generalized Modeling of Photoluminescence Transients">
+<td>
+<span class="listing-date">January,<br>2023</span>
+</td>
+<td>
+<a href="https://doi.org/10.1002/pssb.202200339" class="title listing-title">Generalized Modeling of Photoluminescence Transients</a>
+</td>
+<td>
+<span class="listing-journal-title"><em>Physica Status Solidi (b)</em></span>
+</td>
+</tr>
+<tr data-index="1" data-listing-date-sort="1669071600000" data-listing-title-sort="Microfluidically-Assisted Isolation and Characterization of Achromobacter spanius from Soils for Microbial Degradation of Synthetic Polymers and Organic Solvents">
+<td>
+<span class="listing-date">November,<br>2022</span>
+</td>
+<td>
+<a href="https://doi.org/10.3390/environments9120147" class="title listing-title">Microfluidically-Assisted Isolation and Characterization of Achromobacter spanius from Soils for Microbial Degradation of Synthetic Polymers and Organic Solvents</a>
+</td>
+<td>
+<span class="listing-journal-title"><em>Environments</em></span>
+</td>
+</tr>
+<tr data-index="2" data-listing-date-sort="1630360800000" data-listing-title-sort="Regional estimates of reproduction numbers with application to COVID-19">
+<td>
+<span class="listing-date">August,<br>2021</span>
+</td>
+<td>
+<span class="listing-title">Regional estimates of reproduction numbers with application to COVID-19</span>
+</td>
+<td>
+<span class="listing-journal-title">&nbsp;</span>
+</td>
+</tr>
+<tr data-index="3" data-listing-date-sort="1630015200000" data-listing-title-sort="A pre-registered short-term forecasting study of COVID-19 in Germany and Poland during the second wave">
+<td>
+<span class="listing-date">August,<br>2021</span>
+</td>
+<td>
+<a href="https://doi.org/10.1038/s41467-021-25207-0" class="title listing-title">A pre-registered short-term forecasting study of COVID-19 in Germany and Poland during the second wave</a>
+</td>
+<td>
+<span class="listing-journal-title"><em>Nature Communications</em></span>
+</td>
+</tr>
+<tr data-index="4" data-listing-date-sort="2023" data-listing-title-sort="Measures of COVID-19 Spread">
+<td>
+<span class="listing-date">January,<br>1970</span>
+</td>
+<td>
+<a href="https://doi.org/10.1007/978-3-658-40525-0_3" class="title listing-title">Measures of COVID-19 Spread</a>
+</td>
+<td>
+<span class="listing-journal-title"><em>“Covid-19 pandisziplinär und international:</em></span>
+</td>
+</tr>
+<tr data-index="5" data-listing-date-sort="2020" data-listing-title-sort="Geomstats: A Python Package for Riemannian Geometry in Machine Learning">
+<td>
+<span class="listing-date">January,<br>1970</span>
+</td>
+<td>
+<span class="listing-title">Geomstats: A Python Package for Riemannian Geometry in Machine Learning</span>
+</td>
+<td>
+<span class="listing-journal-title"><em>Journal of Machine Learning Research</em></span>
+</td>
+</tr>
+<tr data-index="6" data-listing-date-sort="1701039600000" data-listing-title-sort="Why are different estimates of the effective reproductive number so different? A case study on COVID-19 in Germany">
+<td>
+<span class="listing-date">November,<br>2023</span>
+</td>
+<td>
+<a href="https://doi.org/10.1371/journal.pcbi.1011653" class="title listing-title">Why are different estimates of the effective reproductive number so different? A case study on COVID-19 in Germany</a>
+</td>
+<td>
+<span class="listing-journal-title"><em>PLOS Computational Biology</em></span>
+</td>
+</tr>
+<tr data-index="7" data-listing-date-sort="1690149600000" data-listing-title-sort="Linear versus Quadratic Detrending in Analyzing Simultaneous Changes in DC-EEG and [Transcutaneous pCO2]{.nocase}">
+<td>
+<span class="listing-date">July,<br>2023</span>
+</td>
+<td>
+<a href="https://doi.org/10.1109/EMBC40787.2023.10340855" class="title listing-title">Linear versus Quadratic Detrending in Analyzing Simultaneous Changes in DC-EEG and <span class="nocase">Transcutaneous pCO2</span></a>
+</td>
+<td>
+<span class="listing-journal-title"><em>2023 45th Annual International Conference of the IEEE</em></span>
+</td>
+</tr>
+<tr data-index="8" data-listing-date-sort="1667170800000" data-listing-title-sort="National and subnational short-term forecasting of COVID-19 in Germany and Poland during early 2021">
+<td>
+<span class="listing-date">October,<br>2022</span>
+</td>
+<td>
+<a href="https://doi.org/10.1038/s43856-022-00191-8" class="title listing-title">National and subnational short-term forecasting of COVID-19 in Germany and Poland during early 2021</a>
+</td>
+<td>
+<span class="listing-journal-title"><em>Communications Medicine</em></span>
+</td>
+</tr>
+<tr data-index="9" data-listing-date-sort="1655330400000" data-listing-title-sort="Predictive performance of multi-model ensemble forecasts of COVID-19 across European nations">
+<td>
+<span class="listing-date">June,<br>2022</span>
+</td>
+<td>
+<a href="https://doi.org/10.1101/2022.06.16.22276024" class="title listing-title">Predictive performance of multi-model ensemble forecasts of COVID-19 across European nations</a>
+</td>
+<td>
+<span class="listing-journal-title">&nbsp;</span>
+</td>
+</tr>
+<tr data-index="10" data-listing-date-sort="1648764000000" data-listing-title-sort="How Much Testing and Social Distancing is Required to Control COVID-19? Some Insight Based on an Age-Differentiated Compartmental Model">
+<td>
+<span class="listing-date">April,<br>2022</span>
+</td>
+<td>
+<a href="https://doi.org/10.1137/20M1377783" class="title listing-title">How Much Testing and Social Distancing is Required to Control COVID-19? Some Insight Based on an Age-Differentiated Compartmental Model</a>
+</td>
+<td>
+<span class="listing-journal-title"><em>SIAM Journal on Control and Optimization</em></span>
+</td>
+</tr>
+<tr data-index="11" data-listing-date-sort="1609455600000" data-listing-title-sort="How to Coordinate Vaccination and Social Distancing to Mitigate SARS-CoV-2 Outbreaks">
+<td>
+<span class="listing-date">January,<br>2021</span>
+</td>
+<td>
+<a href="https://doi.org/10.1137/20M1387687" class="title listing-title">How to Coordinate Vaccination and Social Distancing to Mitigate SARS-CoV-2 Outbreaks</a>
+</td>
+<td>
+<span class="listing-journal-title"><em>SIAM Journal on Applied Dynamical Systems</em></span>
+</td>
+</tr>
+</tbody>
+</table>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -1,0 +1,13 @@
+date,title,occasion,location,coauthors,link
+2024-08-12,Optimal Gaussian Importance Sampling for Bayesian Inverse Problems,Bernoulli-ims 11th World Congress in Probability and Statistics,"Bochum, Germany",,"https://github.com/stefanheyder/IMSBochum/blob/195ce687837cf102d67141d21ae92e280162da11/talk/IMSBochum_2024-08-12.pdf"
+2024-02-18,Exploiting Independence for Optimal Gaussian Importance Sampling - with application to spatio-temporal epidemiological modelling,Kolloquium of SFB 1294: Data Assimilation,"Potsdam, Germany",Thomas Hotz,
+2023-12-15,Exploiting independence in Gaussian importance sampling for Bayesian inverse problems,CMStatistics,"Berlin, Germany",,
+2023-09-14,Partially Gaussian State Space Models for Epidemiological Modelling,Kolloquium KIT,"Karlsruhe, Germany",Thomas Hotz,
+2023-09-14,Improving short term forecasts of COVID-19 incidence with subnational epidemic indicators,CEN 2023,"Basel, Switzerland",Thomas Hotz,
+2023-03-08,Regional estimates of epidemic growth factors with application to COVID-19,GPSD 2023,"Essen, Germany","Jan Pablo Burgard, Tyll Krüger, Thomas Hotz",
+2023-01-25,Modelling and Control of the COVID-19 Epidemic,Wissenschaftsforum TU Ilmenau,"Ilmenau, Germany","Sara Grundel, Thomas Hotz, Tobias Ritschel, Philipp Sauerteig, Karl Worthmann",
+2022-06-30,Regional estimates of reproduction numbers with application to COVID-19,IMS 2022,"London, UK","Jan Pablo Burgard, Tyll Krüger, Thomas Hotz",
+2022-03-31,Regional estimates of reproduction numbers with application to COVID-19,DAGStat 2022,"Hamburg, Germany","Jan Pablo Burgard, Tyll Krüger, Thomas Hotz",
+2019-07-22,"Non-asymptotic confidence sets for Frechet means",EMS 2019,"Palermo, Italy",Thomas Hotz,
+2018-10-26,"Benfords Gesetz",Kinderuni TU Ilmenau,"Ilmenau, Germany",Thomas Hotz,
+2018-06-26,"Kalman filter on Lie groups",S4G 2018,"Prague, Czech Republic",Thomas Hotz,

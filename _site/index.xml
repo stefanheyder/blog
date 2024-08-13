@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>Statistical Ramblings</title>
-<link>https://stefanheyder.dev/</link>
-<atom:link href="https://stefanheyder.dev/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://www.stefanheyder.dev/</link>
+<atom:link href="https://www.stefanheyder.dev/index.xml" rel="self" type="application/rss+xml"/>
 <description>Blog</description>
 <generator>quarto-1.4.553</generator>
 <lastBuildDate>Thu, 08 Aug 2024 22:00:00 GMT</lastBuildDate>
 <item>
   <title>The Gumbel distribution</title>
   <dc:creator>Stefan Heyder</dc:creator>
-  <link>https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</link>
+  <link>https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</link>
   <description><![CDATA[ 
 
 
@@ -181,13 +181,13 @@ font-style: inherit;">"--"</span>)</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="page-columns page-full"><p>From these simulations and the right skew visible in the density, we can guess that the mean of the standard Gumbel is not <img src="https://latex.codecogs.com/png.latex?0">. Indeed, if <img src="https://latex.codecogs.com/png.latex?G%20%5Csim%20%5Coperatorname%7BGumbel%7D(0,1)">, then  <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Cmathbf%20E%20G%20=%20%5Cint_%7B0%7D%5E1%20F%5E%7B-1%7D(u)%20%5Cmathrm%20d%20u%20=%20%5Cint_%7B0%7D%5E1%20-%5Clog(%20-%20%5Clog%20u)%20%5Cmathrm%20d%20u%20=%20%5Cgamma%20%5Capprox%200.5772,%0A"> where <img src="https://latex.codecogs.com/png.latex?%5Cgamma"> is the Euler-Mascheroni constant.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">see <a href="https://en.wikipedia.org/wiki/Euler%27s_constant#Integrals">wikipedia</a>, I have not been able to find a concrete proof of this yet</span></div></div>
-<p>From the definition, we can see that the Gumbel distributions form a location-scale family, i.e.&nbsp;if <img src="https://latex.codecogs.com/png.latex?G%20%5Csim%20%20%5Coperatorname%7BGumbel%7D(%5Cmu,%20%5Cbeta)">, then <img src="https://latex.codecogs.com/png.latex?aG%20+%20b%20%5Csim%20%5Coperatorname%7BGumbel%7D(a%5Cmu%20+%20b,%20a%5E2%5Cbeta)">. Similar to the normal distribution, this allows us to focus on the standard Gumbel distribution <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BGumbel%7D(0,1)">.</p>
+<p>From these simulations and the right skew visible in the density, we can guess that the mean of the standard Gumbel is not <img src="https://latex.codecogs.com/png.latex?0">. Indeed, if <img src="https://latex.codecogs.com/png.latex?G%20%5Csim%20%5Coperatorname%7BGumbel%7D(0,1)">, then <sup>1</sup> <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Cmathbf%20E%20G%20=%20%5Cint_%7B0%7D%5E1%20F%5E%7B-1%7D(u)%20%5Cmathrm%20d%20u%20=%20%5Cint_%7B0%7D%5E1%20-%5Clog(%20-%20%5Clog%20u)%20%5Cmathrm%20d%20u%20=%20%5Cgamma%20%5Capprox%200.5772,%0A"> where <img src="https://latex.codecogs.com/png.latex?%5Cgamma"> is the Euler-Mascheroni constant.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;see <a href="https://en.wikipedia.org/wiki/Euler%27s_constant#Integrals">wikipedia</a>, I have not been able to find a concrete proof of this yet</p></div></div><p>From the definition, we can see that the Gumbel distributions form a location-scale family, i.e.&nbsp;if <img src="https://latex.codecogs.com/png.latex?G%20%5Csim%20%20%5Coperatorname%7BGumbel%7D(%5Cmu,%20%5Cbeta)">, then <img src="https://latex.codecogs.com/png.latex?aG%20+%20b%20%5Csim%20%5Coperatorname%7BGumbel%7D(a%5Cmu%20+%20b,%20a%5E2%5Cbeta)">. Similar to the normal distribution, this allows us to focus on the standard Gumbel distribution <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BGumbel%7D(0,1)">.</p>
 <p>The origins of the Gumbel distribution go back to the early 1930s, when Gumbel discovered the distribution as a limiting distribution of the maximum i.i.d. exponentially distributed samples. This makes the Gumbel distribution one of the three GEV (generalized extreme value) distributions, the others being the Fréchet and the reverse Weibull distribution. Actually, if <img src="https://latex.codecogs.com/png.latex?X%20%5Csim%20%5Coperatorname%7BGumbel%7D(0,1)">, then <img src="https://latex.codecogs.com/png.latex?%5Cexp%20(X)"> and <img src="https://latex.codecogs.com/png.latex?-%20%5Cexp(-X)"> follow a Fréchet and a reverse Weibull distribution respectively.</p>
 <div class="icon-false callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -371,7 +371,7 @@ font-style: inherit;">1</span>))</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -389,11 +389,11 @@ Theorem (limit theorem for extrema) <span class="citation" data-cites="Johnson19
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let <img src="https://latex.codecogs.com/png.latex?X_i,%20i%20%5Cin%20%5Cmathbf%20N"> be a sequence of i.i.d. random variables, let <img src="https://latex.codecogs.com/png.latex?Y_n%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_i"> be the running maximum and consider <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20Z_%7Bn%7D%20=%20Y_%7Bn%7D%20-%20b_%7Bn%7D,%0A"> for a sequence of real numbers <img src="https://latex.codecogs.com/png.latex?b_n">, such that for every <img src="https://latex.codecogs.com/png.latex?k"> <img src="https://latex.codecogs.com/png.latex?b_%7Bkn%7D%20-%20b_n"> converges as <img src="https://latex.codecogs.com/png.latex?n%5Cto%20%5Cinfty"> for every <img src="https://latex.codecogs.com/png.latex?k">.</p>
-<p>If <img src="https://latex.codecogs.com/png.latex?Z_n"> converges in distribution to a distribution with an injective CDF, then the limiting distribution is a Gumbel distribution.</p>
+<p>Let <img src="https://latex.codecogs.com/png.latex?X_i,%20i%20%5Cin%20%5Cmathbf%20N"> be a sequence of i.i.d. random variables, let <img src="https://latex.codecogs.com/png.latex?Y_n%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_i"> be the running maximum and consider <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20Z_%7Bn%7D%20=%20Y_%7Bn%7D%20-%20b_%7Bn%7D,%0A"> for a sequence of real numbers <img src="https://latex.codecogs.com/png.latex?b_n">, such that for every <img src="https://latex.codecogs.com/png.latex?k"> <img src="https://latex.codecogs.com/png.latex?b_%7Bkn%7D%20-%20b_n"> converges as <img src="https://latex.codecogs.com/png.latex?n%5Cto%20%5Cinfty"> for every <img src="https://latex.codecogs.com/png.latex?k">.<sup>2</sup></p>
+<p>If <img src="https://latex.codecogs.com/png.latex?Z_n"> converges in distribution to a distribution with an injective CDF<sup>3</sup>, then the limiting distribution is a Gumbel distribution.</p>
 </div>
-</div><div class="no-row-height column-margin column-container"><span class="margin-aside callout-margin-content">I could not get rid of this technical assumption, see the sidenotes in the proof.</span><span class="margin-aside callout-margin-content">again, could not get rid of this either</span></div>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
+</div>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;again, could not get rid of this either</p></div></div><div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;I could not get rid of this technical assumption, see the sidenotes in the proof.</p></div></div><div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -405,15 +405,15 @@ Proof
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>I basically follow <span class="citation" data-cites="Johnson1995Continous">(<strong>Johnson1995Continous?</strong>)</span> in this proof. Let <img src="https://latex.codecogs.com/png.latex?G"> be the CDF of the limiting distribution and <img src="https://latex.codecogs.com/png.latex?Z%20%5Csim%20G"> and denote general CDFs by <img src="https://latex.codecogs.com/png.latex?F">. We have to show that <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(x)%20=%20%5Cexp%20%5Cleft(%20-%20%5Cexp%20%5Cleft(%20-%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20%5Cright)%20%5Cright)%0A"> for some <img src="https://latex.codecogs.com/png.latex?%5Cmu%20%5Cin%20%5Cmathbf%20R"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20%5Cin%20%5Cmathbf%20R_%7B%3E%200%7D">. Let <img src="https://latex.codecogs.com/png.latex?k%5Cin%5Cmathbf%20N"> and partition the random variables into blocks of size <img src="https://latex.codecogs.com/png.latex?n">, and consider the block-wise maximum, i.e.<br>
+<p>I basically follow <span class="citation" data-cites="Johnson1995Continuous">(Johnson, Kotz, and Balakrishnan 1995)</span> in this proof. Let <img src="https://latex.codecogs.com/png.latex?G"> be the CDF of the limiting distribution and <img src="https://latex.codecogs.com/png.latex?Z%20%5Csim%20G"> and denote general CDFs by <img src="https://latex.codecogs.com/png.latex?F">. We have to show that <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(x)%20=%20%5Cexp%20%5Cleft(%20-%20%5Cexp%20%5Cleft(%20-%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Cbeta%7D%20%5Cright)%20%5Cright)%0A"> for some <img src="https://latex.codecogs.com/png.latex?%5Cmu%20%5Cin%20%5Cmathbf%20R"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20%5Cin%20%5Cmathbf%20R_%7B%3E%200%7D">. Let <img src="https://latex.codecogs.com/png.latex?k%5Cin%5Cmathbf%20N"> and partition the random variables into blocks of size <img src="https://latex.codecogs.com/png.latex?n">, and consider the block-wise maximum, i.e.<br>
 <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Cbegin%7Balign*%7D%0A%20%20%20%20%20%20%20%20Y%5E%7Bj%7D_%7Bn%7D%20=%20%5Cmax_%7Bi%20=%201,%20%5Cdots,%20n%7D%20X_%7B(j%20-%201)k%20+%20i%7D%20&amp;&amp;%20j%20=%201,%20%5Cdots,%20k.%0A%20%20%20%20%5Cend%7Balign*%7D%0A"> Let <img src="https://latex.codecogs.com/png.latex?Z%5Ej_n%20=%20Y%5Ej_n%20-%20b_n"> and let <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty">. Then <img src="https://latex.codecogs.com/png.latex?Z%5Ej_n%20%5Cstackrel%7B%5Cmathcal%20D%7D%7B%5Clongrightarrow%7D%20Z"> for <img src="https://latex.codecogs.com/png.latex?j%20=%201,%20%5Cdots,%20k">.</p>
 <p>Now <img src="https://latex.codecogs.com/png.latex?Z_%7Bkn%7D%20=%20%5Cmax_%7Bj%20=%201,%20%5Cdots,%20k%7D%20Z%5Ej_n%20+%20b_%7Bn%7D%20-%20b_%7Bkn%7D"> also converges to <img src="https://latex.codecogs.com/png.latex?Z"> in distribution. By the properties of the CDF and the i.i.d. assumption, we have<br>
-<img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20F_%7BZ_%7Bkn%7D%7D%20(z)%20=%20%5Cmathbf%20P%20%5Cleft(%20%5Cmax_%7Bj%20=%201,%20%5Cdots%20k%7D%20Z%5E%7Bj%7D_n%20%5Cleq%20z%20-%20b_%7Bn%7D%20+%20b_%7Bkn%7D%20%5Cright)%20%20=%20(F_%7BZ%5E%7B1%7D_n%7D(z%20-%20b_%7Bn%7D%20+%20b_%7Bkn%7D))%5E%7Bk%7D.%0A"> As <img src="https://latex.codecogs.com/png.latex?n"> goes to <img src="https://latex.codecogs.com/png.latex?%5Cinfty">, the left hand side converges to <img src="https://latex.codecogs.com/png.latex?G(z)">, and so the right-hand side does as well. Assuming <img src="https://latex.codecogs.com/png.latex?-b_n%20+%20b_%7Bkn%7D%20%5Cto%20c_%7Bk%7D"> as <img src="https://latex.codecogs.com/png.latex?n%5Cto%20%5Cinfty">, the right-hand side converges to <img src="https://latex.codecogs.com/png.latex?G(z%20-%20c_k)%5Ek"> as well.  Thus <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z)%20=%20G(z%20-%20c_%7Bk%7D)%5E%7Bk%7D,%0A"> or, equivalently, <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z%20+%20c_%7Bk%7D)%20=%20G(z)%5E%7Bk%7D.%0A"> This implies <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z%20+%20c_%7Bk%7D%20+%20c_%7Bl%7D)%20=%20(G(z)%5E%7Bk%7D)%5E%7Bl%7D%20=%20G(z)%5E%7Bkl%7D%20=%20G(z%20+%20c_%7Bkl%7D),%0A"> so <img src="https://latex.codecogs.com/png.latex?c_k%20+%20c_l%20=%20c_%7Bkl%7D">, if <img src="https://latex.codecogs.com/png.latex?G"> is injective [again, <span class="citation" data-cites="Johnson1995Continous">(<strong>Johnson1995Continous?</strong>)</span> skip over this]. Thus <img src="https://latex.codecogs.com/png.latex?c_k%20=%20%5Cxi%5Clog%20k"> for some <img src="https://latex.codecogs.com/png.latex?%5Cxi%20%5Cin%20%5Cmathbf%20R">.</p>
+<img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20F_%7BZ_%7Bkn%7D%7D%20(z)%20=%20%5Cmathbf%20P%20%5Cleft(%20%5Cmax_%7Bj%20=%201,%20%5Cdots%20k%7D%20Z%5E%7Bj%7D_n%20%5Cleq%20z%20-%20b_%7Bn%7D%20+%20b_%7Bkn%7D%20%5Cright)%20%20=%20(F_%7BZ%5E%7B1%7D_n%7D(z%20-%20b_%7Bn%7D%20+%20b_%7Bkn%7D))%5E%7Bk%7D.%0A"> As <img src="https://latex.codecogs.com/png.latex?n"> goes to <img src="https://latex.codecogs.com/png.latex?%5Cinfty">, the left hand side converges to <img src="https://latex.codecogs.com/png.latex?G(z)">, and so the right-hand side does as well. Assuming <img src="https://latex.codecogs.com/png.latex?-b_n%20+%20b_%7Bkn%7D%20%5Cto%20c_%7Bk%7D"> as <img src="https://latex.codecogs.com/png.latex?n%5Cto%20%5Cinfty">, the right-hand side converges to <img src="https://latex.codecogs.com/png.latex?G(z%20-%20c_k)%5Ek"> as well. <sup>4</sup> Thus <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z)%20=%20G(z%20-%20c_%7Bk%7D)%5E%7Bk%7D,%0A"> or, equivalently, <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z%20+%20c_%7Bk%7D)%20=%20G(z)%5E%7Bk%7D.%0A"> This implies <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20G(z%20+%20c_%7Bk%7D%20+%20c_%7Bl%7D)%20=%20(G(z)%5E%7Bk%7D)%5E%7Bl%7D%20=%20G(z)%5E%7Bkl%7D%20=%20G(z%20+%20c_%7Bkl%7D),%0A"> so <img src="https://latex.codecogs.com/png.latex?c_k%20+%20c_l%20=%20c_%7Bkl%7D">, if <img src="https://latex.codecogs.com/png.latex?G"> is injective <sup>5</sup>. Thus <img src="https://latex.codecogs.com/png.latex?c_k%20=%20%5Cxi%5Clog%20k"> for some <img src="https://latex.codecogs.com/png.latex?%5Cxi%20%5Cin%20%5Cmathbf%20R">.</p>
 <p>Taking logs twice, we obtain <img src="https://latex.codecogs.com/png.latex?%0A%20%20%20%20%5Clog%20k%20+%20%5Clog%20(-%20%5Clog%20G(z))%20=%20%5Clog%20-%20%5Clog%20G(z%20+%20%5Cxi%20%5Clog%20k),%0A"> and so <img src="https://latex.codecogs.com/png.latex?z%20%5Cmapsto%20%5Clog%20(-%20%5Clog%20G(z))"> is an affine function, which was just what we had to show.</p>
 </div>
 </div>
 </div>
-<div class="no-row-height column-margin column-container"><span class="margin-aside callout-5-contents callout-collapse collapse callout-margin-content"><span class="citation" data-cites="Johson1995Continuous">(<strong>Johson1995Continuous?</strong>)</span> as well as <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Tippett%E2%80%93Gnedenko_theorem#References">wikipedia</a> directly use <img src="https://latex.codecogs.com/png.latex?-b_n%20+%20b_%7Bkn%7D%20=%20b_k">, but I haven’t seen a direct proof yet. <span class="citation" data-cites="Haan2006Extreme">(Haan and Ferreira 2006)</span> goes a different, more precise route.</span></div><p>Finally, to check whether this works, let us perform some simulations for the maximum of <img src="https://latex.codecogs.com/png.latex?n"> standard normal draws.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;again, <span class="citation" data-cites="Johnson1995Continuous">(Johnson, Kotz, and Balakrishnan 1995)</span> skip over this</p></div></div><div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;<span class="citation" data-cites="Johnson1995Continuous">(Johnson, Kotz, and Balakrishnan 1995)</span> as well as <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Tippett%E2%80%93Gnedenko_theorem#References">wikipedia</a> directly use <img src="https://latex.codecogs.com/png.latex?-b_n%20+%20b_%7Bkn%7D%20=%20b_k">, but I haven’t seen a direct proof yet. <span class="citation" data-cites="Haan2006Extreme">(Haan and Ferreira 2006)</span> goes a different, more precise route.</p></div></div><p>Finally, to check whether this works, let us perform some simulations for the maximum of <img src="https://latex.codecogs.com/png.latex?n"> standard normal draws.</p>
 <div id="cell-10" class="cell" data-execution_count="28">
 <details class="code-fold">
 <summary>Code</summary>
@@ -557,11 +557,12 @@ font-style: inherit;">*</span> density_gumbel(mu,mu,beta))</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+
 
 
 
@@ -574,13 +575,13 @@ Haan, L. de, and Ana Ferreira. 2006. <em>Extreme Value Theory: An Introduction</
 Johnson, Norman L., Samuel Kotz, and Narayanaswamy Balakrishnan. 1995. <em>Continuous Univariate Distributions</em>. Vol. II. John Wiley &amp; Sons, Ltd.
 </div>
 </div></section></div> ]]></description>
-  <guid>https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</guid>
+  <guid>https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</guid>
   <pubDate>Thu, 08 Aug 2024 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Asymptotics of estimators</title>
   <dc:creator>Stefan Heyder</dc:creator>
-  <link>https://stefanheyder.dev/posts/2024-07-07 asymptotics/</link>
+  <link>https://www.stefanheyder.dev/posts/2024-07-07 asymptotics/</link>
   <description><![CDATA[ 
 
 
@@ -643,13 +644,13 @@ Definition (central limit theorem)
 </section>
 
  ]]></description>
-  <guid>https://stefanheyder.dev/posts/2024-07-07 asymptotics/</guid>
+  <guid>https://www.stefanheyder.dev/posts/2024-07-07 asymptotics/</guid>
   <pubDate>Fri, 05 Jul 2024 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Fisherian reduction for the t-Test</title>
   <dc:creator>Stefan Heyder</dc:creator>
-  <link>https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</link>
+  <link>https://www.stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</link>
   <description><![CDATA[ 
 
 
@@ -769,7 +770,7 @@ font-style: inherit;">sd</span>(transformed))</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://www.stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -780,7 +781,7 @@ font-style: inherit;">sd</span>(transformed))</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
+<p><img src="https://www.stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -794,7 +795,7 @@ font-style: inherit;">sd</span>(transformed))</span></code></pre></div>
 Cox, D. R. 2006. <em>Principles of Statistical Inference</em>. Cambridge ; New York: Cambridge University Press.
 </div>
 </div></section></div> ]]></description>
-  <guid>https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</guid>
+  <guid>https://www.stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</guid>
   <pubDate>Mon, 07 Feb 2022 23:00:00 GMT</pubDate>
 </item>
 </channel>

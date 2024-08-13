@@ -291,10 +291,10 @@ Definition (Gumbel distribution)
 </div>
 </div>
 </div>
-<div class="page-columns page-full"><p>From these simulations and the right skew visible in the density, we can guess that the mean of the standard Gumbel is not <span class="math inline">\(0\)</span>. Indeed, if <span class="math inline">\(G \sim \operatorname{Gumbel}(0,1)\)</span>, then  <span class="math display">\[
+<p>From these simulations and the right skew visible in the density, we can guess that the mean of the standard Gumbel is not <span class="math inline">\(0\)</span>. Indeed, if <span class="math inline">\(G \sim \operatorname{Gumbel}(0,1)\)</span>, then <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="math display">\[
     \mathbf E G = \int_{0}^1 F^{-1}(u) \mathrm d u = \int_{0}^1 -\log( - \log u) \mathrm d u = \gamma \approx 0.5772,
-\]</span> where <span class="math inline">\(\gamma\)</span> is the Euler-Mascheroni constant.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">see <a href="https://en.wikipedia.org/wiki/Euler%27s_constant#Integrals">wikipedia</a>, I have not been able to find a concrete proof of this yet</span></div></div>
-<p>From the definition, we can see that the Gumbel distributions form a location-scale family, i.e.&nbsp;if <span class="math inline">\(G \sim  \operatorname{Gumbel}(\mu, \beta)\)</span>, then <span class="math inline">\(aG + b \sim \operatorname{Gumbel}(a\mu + b, a^2\beta)\)</span>. Similar to the normal distribution, this allows us to focus on the standard Gumbel distribution <span class="math inline">\(\operatorname{Gumbel}(0,1)\)</span>.</p>
+\]</span> where <span class="math inline">\(\gamma\)</span> is the Euler-Mascheroni constant.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;see <a href="https://en.wikipedia.org/wiki/Euler%27s_constant#Integrals">wikipedia</a>, I have not been able to find a concrete proof of this yet</p></div></div><p>From the definition, we can see that the Gumbel distributions form a location-scale family, i.e.&nbsp;if <span class="math inline">\(G \sim  \operatorname{Gumbel}(\mu, \beta)\)</span>, then <span class="math inline">\(aG + b \sim \operatorname{Gumbel}(a\mu + b, a^2\beta)\)</span>. Similar to the normal distribution, this allows us to focus on the standard Gumbel distribution <span class="math inline">\(\operatorname{Gumbel}(0,1)\)</span>.</p>
 <p>The origins of the Gumbel distribution go back to the early 1930s, when Gumbel discovered the distribution as a limiting distribution of the maximum i.i.d. exponentially distributed samples. This makes the Gumbel distribution one of the three GEV (generalized extreme value) distributions, the others being the Fréchet and the reverse Weibull distribution. Actually, if <span class="math inline">\(X \sim \operatorname{Gumbel}(0,1)\)</span>, then <span class="math inline">\(\exp (X)\)</span> and <span class="math inline">\(- \exp(-X)\)</span> follow a Fréchet and a reverse Weibull distribution respectively.</p>
 <div class="icon-false callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -381,11 +381,11 @@ Theorem (limit theorem for extrema) <span class="citation" data-cites="Johnson19
 <div class="callout-body-container callout-body">
 <p>Let <span class="math inline">\(X_i, i \in \mathbf N\)</span> be a sequence of i.i.d. random variables, let <span class="math inline">\(Y_n = \max_{i = 1, \dots, n} X_i\)</span> be the running maximum and consider <span class="math display">\[
     Z_{n} = Y_{n} - b_{n},
-\]</span> for a sequence of real numbers <span class="math inline">\(b_n\)</span>, such that for every <span class="math inline">\(k\)</span> <span class="math inline">\(b_{kn} - b_n\)</span> converges as <span class="math inline">\(n\to \infty\)</span> for every <span class="math inline">\(k\)</span>.</p>
-<p>If <span class="math inline">\(Z_n\)</span> converges in distribution to a distribution with an injective CDF, then the limiting distribution is a Gumbel distribution.</p>
+\]</span> for a sequence of real numbers <span class="math inline">\(b_n\)</span>, such that for every <span class="math inline">\(k\)</span> <span class="math inline">\(b_{kn} - b_n\)</span> converges as <span class="math inline">\(n\to \infty\)</span> for every <span class="math inline">\(k\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>If <span class="math inline">\(Z_n\)</span> converges in distribution to a distribution with an injective CDF<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, then the limiting distribution is a Gumbel distribution.</p>
 </div>
-</div><div class="no-row-height column-margin column-container"><span class="margin-aside callout-margin-content">I could not get rid of this technical assumption, see the sidenotes in the proof.</span><span class="margin-aside callout-margin-content">again, could not get rid of this either</span></div>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
+</div>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;again, could not get rid of this either</p></div></div><div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;I could not get rid of this technical assumption, see the sidenotes in the proof.</p></div></div><div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -397,7 +397,7 @@ Proof
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>I basically follow <span class="citation" data-cites="Johnson1995Continous">(<a href="#ref-Johnson1995Continous" role="doc-biblioref"><strong>Johnson1995Continous?</strong></a>)</span> in this proof. Let <span class="math inline">\(G\)</span> be the CDF of the limiting distribution and <span class="math inline">\(Z \sim G\)</span> and denote general CDFs by <span class="math inline">\(F\)</span>. We have to show that <span class="math display">\[
+<p>I basically follow <span class="citation" data-cites="Johnson1995Continuous">(<a href="#ref-Johnson1995Continuous" role="doc-biblioref">Johnson, Kotz, and Balakrishnan 1995</a>)</span> in this proof. Let <span class="math inline">\(G\)</span> be the CDF of the limiting distribution and <span class="math inline">\(Z \sim G\)</span> and denote general CDFs by <span class="math inline">\(F\)</span>. We have to show that <span class="math display">\[
     G(x) = \exp \left( - \exp \left( -\frac{x - \mu}{\beta} \right) \right)
 \]</span> for some <span class="math inline">\(\mu \in \mathbf R\)</span> and <span class="math inline">\(\beta \in \mathbf R_{&gt; 0}\)</span>. Let <span class="math inline">\(k\in\mathbf N\)</span> and partition the random variables into blocks of size <span class="math inline">\(n\)</span>, and consider the block-wise maximum, i.e.<br>
 <span class="math display">\[
@@ -408,20 +408,20 @@ Proof
 <p>Now <span class="math inline">\(Z_{kn} = \max_{j = 1, \dots, k} Z^j_n + b_{n} - b_{kn}\)</span> also converges to <span class="math inline">\(Z\)</span> in distribution. By the properties of the CDF and the i.i.d. assumption, we have<br>
 <span class="math display">\[
     F_{Z_{kn}} (z) = \mathbf P \left( \max_{j = 1, \dots k} Z^{j}_n \leq z - b_{n} + b_{kn} \right)  = (F_{Z^{1}_n}(z - b_{n} + b_{kn}))^{k}.
-\]</span> As <span class="math inline">\(n\)</span> goes to <span class="math inline">\(\infty\)</span>, the left hand side converges to <span class="math inline">\(G(z)\)</span>, and so the right-hand side does as well. Assuming <span class="math inline">\(-b_n + b_{kn} \to c_{k}\)</span> as <span class="math inline">\(n\to \infty\)</span>, the right-hand side converges to <span class="math inline">\(G(z - c_k)^k\)</span> as well.  Thus <span class="math display">\[
+\]</span> As <span class="math inline">\(n\)</span> goes to <span class="math inline">\(\infty\)</span>, the left hand side converges to <span class="math inline">\(G(z)\)</span>, and so the right-hand side does as well. Assuming <span class="math inline">\(-b_n + b_{kn} \to c_{k}\)</span> as <span class="math inline">\(n\to \infty\)</span>, the right-hand side converges to <span class="math inline">\(G(z - c_k)^k\)</span> as well. <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Thus <span class="math display">\[
     G(z) = G(z - c_{k})^{k},
 \]</span> or, equivalently, <span class="math display">\[
     G(z + c_{k}) = G(z)^{k}.
 \]</span> This implies <span class="math display">\[
     G(z + c_{k} + c_{l}) = (G(z)^{k})^{l} = G(z)^{kl} = G(z + c_{kl}),
-\]</span> so <span class="math inline">\(c_k + c_l = c_{kl}\)</span>, if <span class="math inline">\(G\)</span> is injective [again, <span class="citation" data-cites="Johnson1995Continous">(<a href="#ref-Johnson1995Continous" role="doc-biblioref"><strong>Johnson1995Continous?</strong></a>)</span> skip over this]. Thus <span class="math inline">\(c_k = \xi\log k\)</span> for some <span class="math inline">\(\xi \in \mathbf R\)</span>.</p>
+\]</span> so <span class="math inline">\(c_k + c_l = c_{kl}\)</span>, if <span class="math inline">\(G\)</span> is injective <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Thus <span class="math inline">\(c_k = \xi\log k\)</span> for some <span class="math inline">\(\xi \in \mathbf R\)</span>.</p>
 <p>Taking logs twice, we obtain <span class="math display">\[
     \log k + \log (- \log G(z)) = \log - \log G(z + \xi \log k),
 \]</span> and so <span class="math inline">\(z \mapsto \log (- \log G(z))\)</span> is an affine function, which was just what we had to show.</p>
 </div>
 </div>
 </div>
-<div class="no-row-height column-margin column-container"><span class="margin-aside callout-5-contents callout-collapse collapse callout-margin-content"><span class="citation" data-cites="Johson1995Continuous">(<a href="#ref-Johson1995Continuous" role="doc-biblioref"><strong>Johson1995Continuous?</strong></a>)</span> as well as <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Tippett%E2%80%93Gnedenko_theorem#References">wikipedia</a> directly use <span class="math inline">\(-b_n + b_{kn} = b_k\)</span>, but I haven’t seen a direct proof yet. <span class="citation" data-cites="Haan2006Extreme">(<a href="#ref-Haan2006Extreme" role="doc-biblioref">Haan and Ferreira 2006</a>)</span> goes a different, more precise route.</span></div><p>Finally, to check whether this works, let us perform some simulations for the maximum of <span class="math inline">\(n\)</span> standard normal draws.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;again, <span class="citation" data-cites="Johnson1995Continuous">(<a href="#ref-Johnson1995Continuous" role="doc-biblioref">Johnson, Kotz, and Balakrishnan 1995</a>)</span> skip over this</p></div></div><div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;<span class="citation" data-cites="Johnson1995Continuous">(<a href="#ref-Johnson1995Continuous" role="doc-biblioref">Johnson, Kotz, and Balakrishnan 1995</a>)</span> as well as <a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Tippett%E2%80%93Gnedenko_theorem#References">wikipedia</a> directly use <span class="math inline">\(-b_n + b_{kn} = b_k\)</span>, but I haven’t seen a direct proof yet. <span class="citation" data-cites="Haan2006Extreme">(<a href="#ref-Haan2006Extreme" role="doc-biblioref">Haan and Ferreira 2006</a>)</span> goes a different, more precise route.</p></div></div><p>Finally, to check whether this works, let us perform some simulations for the maximum of <span class="math inline">\(n\)</span> standard normal draws.</p>
 <div id="cell-10" class="cell" data-execution_count="28">
 <details class="code-fold">
 <summary>Code</summary>
@@ -454,6 +454,7 @@ Proof
 </div>
 </div>
 </div>
+
 
 
 

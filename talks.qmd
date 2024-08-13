@@ -1,0 +1,48 @@
+---
+title: Talks
+---
+
+
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+library(knitr)
+suppressPackageStartupMessages({
+    library(tidyverse)
+})
+
+talks <- read_csv("data/talks.csv")
+
+render_talks <- function(talks) {
+    year <- year(talks[1,]$date)
+    cat(str_glue("## {year}\n"))
+    cat("\n")
+
+    for (i in seq(nrow(talks))) {
+        talk <- talks[i,]
+
+        title <- ifelse(is.na(talk$link), talk$title, str_glue("[{talk$title}]({talk$link})"))
+        date <- stamp("on March 1 1999", quiet = TRUE)(talk$date)
+        occasion <- talk$occasion
+        location <- talk$location
+
+        coauthors <- ifelse(is.na(talk$coauthors), "", str_glue(", joint work with {talk$coauthors}"))
+        
+        cat(str_glue("- **{title}** {date} @ _{occasion}_, {location}{coauthors}"))
+        cat("\n")
+    }
+    cat("\n")
+}
+```
+
+
+```{r}
+#| echo: FALSE
+#| results: 'asis'
+talks %>%
+    arrange(desc(date)) %>%
+    group_by(year = fct_rev(ordered(year(date)))) %>%
+    group_walk(~ render_talks(.x))
+```
