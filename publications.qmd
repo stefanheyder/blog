@@ -16,7 +16,7 @@ suppressPackageStartupMessages({
 publications <- read_csv("data/own_publications.csv")
 
 render_publications <- function(publications) {
-    year <- year(publications[1,]$date)
+    year <- year(publications[1,]$Date)
     cat(str_glue("## {year}\n"))
     cat("\n")
 
@@ -26,10 +26,10 @@ render_publications <- function(publications) {
         authors <- publication$Author
         date <- publication$Date
         title <- publication$Title
-        journal <- publication$`Journal Abbreviation`
-        doi_link <- ifelse(publication$DOI, str_glue("https://doi.org/{publication$DOI}"), "")
+        where <- publication$`Publication Title`
+        link <- str_glue("[{publication$Url}]({publication$Url})")
 
-        cat(str_glue("-  {authors} ({date}). **{title}.** {journal}. {doi_link}."))
+        cat(str_glue("-  {authors} ({date}). **{title}.** {where}. {link}."))
         cat("\n")
     }
     cat("\n")

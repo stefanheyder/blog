@@ -9,7 +9,8 @@ website:
     right:
       - about.qmd
       - impressum.qmd
-      - publications.md
+      - publications.qmd
+      - talks.qmd
       - icon: github
         href: https://github.com/stefanheyder
       - icon: rss

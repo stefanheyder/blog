@@ -6,15 +6,15 @@
       version="2.0">
 <channel>
 <title>Statistical Ramblings</title>
-<link>https://www.stefanheyder.dev/</link>
-<atom:link href="https://www.stefanheyder.dev/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://stefanheyder.dev/</link>
+<atom:link href="https://stefanheyder.dev/index.xml" rel="self" type="application/rss+xml"/>
 <description>Blog</description>
 <generator>quarto-1.4.553</generator>
 <lastBuildDate>Thu, 08 Aug 2024 22:00:00 GMT</lastBuildDate>
 <item>
   <title>The Gumbel distribution</title>
   <dc:creator>Stefan Heyder</dc:creator>
-  <link>https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</link>
+  <link>https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</link>
   <description><![CDATA[ 
 
 
@@ -181,7 +181,7 @@ font-style: inherit;">"--"</span>)</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -371,7 +371,7 @@ font-style: inherit;">1</span>))</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -557,7 +557,7 @@ font-style: inherit;">*</span> density_gumbel(mu,mu,beta))</span>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -575,13 +575,13 @@ Haan, L. de, and Ana Ferreira. 2006. <em>Extreme Value Theory: An Introduction</
 Johnson, Norman L., Samuel Kotz, and Narayanaswamy Balakrishnan. 1995. <em>Continuous Univariate Distributions</em>. Vol. II. John Wiley &amp; Sons, Ltd.
 </div>
 </div></section></div> ]]></description>
-  <guid>https://www.stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</guid>
+  <guid>https://stefanheyder.dev/posts/2024-07-17 gumbel_distribution/</guid>
   <pubDate>Thu, 08 Aug 2024 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Asymptotics of estimators</title>
   <dc:creator>Stefan Heyder</dc:creator>
-  <link>https://www.stefanheyder.dev/posts/2024-07-07 asymptotics/</link>
+  <link>https://stefanheyder.dev/posts/2024-07-07 asymptotics/</link>
   <description><![CDATA[ 
 
 
@@ -644,13 +644,13 @@ Definition (central limit theorem)
 </section>
 
  ]]></description>
-  <guid>https://www.stefanheyder.dev/posts/2024-07-07 asymptotics/</guid>
+  <guid>https://stefanheyder.dev/posts/2024-07-07 asymptotics/</guid>
   <pubDate>Fri, 05 Jul 2024 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Fisherian reduction for the t-Test</title>
   <dc:creator>Stefan Heyder</dc:creator>
-  <link>https://www.stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</link>
+  <link>https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</link>
   <description><![CDATA[ 
 
 
@@ -770,7 +770,7 @@ font-style: inherit;">sd</span>(transformed))</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://www.stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -781,7 +781,7 @@ font-style: inherit;">sd</span>(transformed))</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="https://www.stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
+<p><img src="https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/index_files/figure-html/cell-2-output-3.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -795,7 +795,7 @@ font-style: inherit;">sd</span>(transformed))</span></code></pre></div>
 Cox, D. R. 2006. <em>Principles of Statistical Inference</em>. Cambridge ; New York: Cambridge University Press.
 </div>
 </div></section></div> ]]></description>
-  <guid>https://www.stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</guid>
+  <guid>https://stefanheyder.dev/posts/2022-02-08 fisherian_reduction/</guid>
   <pubDate>Mon, 07 Feb 2022 23:00:00 GMT</pubDate>
 </item>
 </channel>
