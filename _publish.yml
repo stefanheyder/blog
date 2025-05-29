@@ -1,4 +1,4 @@
 - source: project
   netlify:
     - id: 0099ce5d-5129-4a23-8221-36a44bbf5bbe
-      url: 'https://stefanheyder.dev'
+      url: https://stefanheyder.dev

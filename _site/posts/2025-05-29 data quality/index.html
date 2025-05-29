@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Stefan Heyder">
+<meta name="dcterms.date" content="2025-05-29">
 
-<title>Publications – Data science ramblings</title>
+<title>Early data validation saves you trouble down the line – Data science ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,17 +70,17 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Data science ramblings</span>
     </a>
   </div>
@@ -89,19 +91,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About this blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./impressum.html"> 
+    <a class="nav-link" href="../../impressum.html"> 
 <span class="menu-text">Impressum</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./publications.html" aria-current="page"> 
+    <a class="nav-link" href="../../publications.html"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./talks.html"> 
+    <a class="nav-link" href="../../talks.html"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item compact">
@@ -110,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -122,61 +124,65 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Early data validation saves you trouble down the line</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">data</div>
+                <div class="quarto-category">data science</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Stefan Heyder </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 29, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Publications</h1>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section">2023</h2>
+<p>Working with poor-quality data sucks. It leads to bugs due to the implicit assumptions we make that turn out to be incorrect. For example:</p>
+<blockquote class="blockquote">
 <ul>
-<li>Brockhaus, Elisabeth K.; Wolffram, Daniel; Stadler, Tanja; Osthege, Michael; Mitra, Tanmay; Littek, Jonas M.; Krymova, Ekaterina; Klesen, Anna J.; Huisman, Jana S.; Heyder, Stefan; Helleckes, Laura M.; Heiden, Matthias an der; Funk, Sebastian; Abbott, Sam; Bracher, Johannes (2023-11-27). <strong>Why are different estimates of the effective reproductive number so different? A case study on COVID-19 in Germany.</strong> PLOS Computational Biology. <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011653">https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011653</a>.</li>
-<li>Heyder, Stefan; Hotz, Thomas (2023-10-04). <strong>Measures of COVID-19 Spread.</strong> Covid-19 pandisziplinär und international: Gesundheitswissenschaftliche, gesellschaftspolitische und philosophische Hintergründe. <a href="https://doi.org/10.1007/978-3-658-40525-0_3">https://doi.org/10.1007/978-3-658-40525-0_3</a>.</li>
+<li>This column looks like an ID, so surely it is unique (<em>nope</em>) and not null (<em>you wish</em>).</li>
+<li>This column is an amount of money in euros, so it should be formatted consistently (<em>haha</em>), e.g.&nbsp;it should never contain dollar amounts, it should have commas as decimal separators, it should contain no spaces, … .</li>
 </ul>
-</section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">2022</h2>
-<ul>
-<li>Bracher, Johannes; Wolffram, Daniel; Deuschel, Jannik; Görgen, Konstantin; Ketterer, Jakob L.; Ullrich, Alexander; Abbott, Sam; Barbarossa, Maria V.; Bertsimas, Dimitris; Bhatia, Sangeeta; Bodych, Marcin; Bosse, Nikos I.; Burgard, Jan Pablo; Castro, Lauren; Fairchild, Geoffrey; Fiedler, Jochen; Fuhrmann, Jan; Funk, Sebastian; Gambin, Anna; Gogolewski, Krzysztof; Heyder, Stefan; Hotz, Thomas; Kheifetz, Yuri; Kirsten, Holger; Krueger, Tyll; Krymova, Ekaterina; Leithäuser, Neele; Li, Michael L.; Meinke, Jan H.; Miasojedow, Błażej; Michaud, Isaac J.; Mohring, Jan; Nouvellet, Pierre; Nowosielski, Jedrzej M.; Ozanski, Tomasz; Radwan, Maciej; Rakowski, Franciszek; Scholz, Markus; Soni, Saksham; Srivastava, Ajitesh; Gneiting, Tilmann; Schienle, Melanie (2022-10-31). <strong>National and subnational short-term forecasting of COVID-19 in Germany and Poland during early 2021.</strong> Communications Medicine. <a href="https://www.nature.com/articles/s43856-022-00191-8">https://www.nature.com/articles/s43856-022-00191-8</a>.</li>
-<li>Sherratt, K.; Gruson, H.; Grah, R.; Johnson, H.; Niehus, R.; Prasse, B.; Sandman, F.; Deuschel, J.; Wolffram, D.; Abbott, S.; Ullrich, A.; Gibson, G.; Ray, El.; Reich, Ng.; Sheldon, D.; Wang, Y.; Wattanachit, N.; Wang, L.; Trnka, J.; Obozinski, G.; Sun, T.; Thanou, D.; Pottier, L.; Krymova, E.; Barbarossa, Mv.; Leithäuser, N.; Mohring, J.; Schneider, J.; Wlazlo, J.; Fuhrmann, J.; Lange, B.; Rodiah, I.; Baccam, P.; Gurung, H.; Stage, S.; Suchoski, B.; Budzinski, J.; Walraven, R.; Villanueva, I.; Tucek, V.; Šmíd, M.; Zajícek, M.; Pérez Álvarez, C.; Reina, B.; Bosse, Ni.; Meakin, S.; Di Loro, P. Alaimo; Maruotti, A.; Eclerová, V.; Kraus, A.; Kraus, D.; Pribylova, L.; Dimitris, B.; Li, Ml.; Saksham, S.; Dehning, J.; Mohr, S.; Priesemann, V.; Redlarski, G.; Bejar, B.; Ardenghi, G.; Parolini, N.; Ziarelli, G.; Bock, W.; Heyder, S.; Hotz, T.; E. Singh, D.; Guzman-Merino, M.; Aznarte, Jl.; Moriña, D.; Alonso, S.; Álvarez, E.; López, D.; Prats, C.; Burgard, Jp.; Rodloff, A.; Zimmermann, T.; Kuhlmann, A.; Zibert, J.; Pennoni, F.; Divino, F.; Català, M.; Lovison, G.; Giudici, P.; Tarantino, B.; Bartolucci, F.; Jona Lasinio, G.; Mingione, M.; Farcomeni, A.; Srivastava, A.; Montero-Manso, P.; Adiga, A.; Hurt, B.; Lewis, B.; Marathe, M.; Porebski, P.; Venkatramanan, S.; Bartczuk, R.; Dreger, F.; Gambin, A.; Gogolewski, K.; Gruziel-Slomka, M.; Krupa, B.; Moszynski, A.; Niedzielewski, K.; Nowosielski, J.; Radwan, M.; Rakowski, F.; Semeniuk, M.; Szczurek, E.; Zielinski, J.; Kisielewski, J.; Pabjan, B.; Holger, K.; Kheifetz, Y.; Scholz, M.; Bodych, M.; Filinski, M.; Idzikowski, R.; Krueger, T.; Ozanski, T.; Bracher, J.; Funk, S. (2022-06-16). <strong>Predictive performance of multi-model ensemble forecasts of COVID-19 across European nations.</strong> NA. <a href="http://medrxiv.org/lookup/doi/10.1101/2022.06.16.22276024">http://medrxiv.org/lookup/doi/10.1101/2022.06.16.22276024</a>.</li>
-<li>Grundel, Sara; Heyder, Stefan; Hotz, Thomas; Ritschel, Tobias K. S.; Sauerteig, Philipp; Worthmann, Karl (2022-04-01). <strong>How Much Testing and Social Distancing is Required to Control COVID-19? Some Insight Based on an Age-Differentiated Compartmental Model.</strong> SIAM Journal on Control and Optimization. <a href="https://epubs.siam.org/doi/10.1137/20M1377783">https://epubs.siam.org/doi/10.1137/20M1377783</a>.</li>
-</ul>
-</section>
-<section id="section-2" class="level2">
-<h2 class="anchored" data-anchor-id="section-2">2021</h2>
-<ul>
-<li>Burgard, Jan Pablo; Heyder, Stefan; Hotz, Thomas; Krueger, Tyll (2021-08-31). <strong>Regional estimates of reproduction numbers with application to COVID-19.</strong> arXiv:2108.13842 [stat] (accepted for publication). <a href="http://arxiv.org/abs/2108.13842">http://arxiv.org/abs/2108.13842</a>.</li>
-<li>Bracher, J.; Wolffram, D.; Deuschel, J.; Görgen, K.; Ketterer, J. L.; Ullrich, A.; Abbott, S.; Barbarossa, M. V.; Bertsimas, D.; Bhatia, S.; Bodych, M.; Bosse, N. I.; Burgard, J. P.; Castro, L.; Fairchild, G.; Fuhrmann, J.; Funk, S.; Gogolewski, K.; Gu, Q.; Heyder, S.; Hotz, T.; Kheifetz, Y.; Kirsten, H.; Krueger, T.; Krymova, E.; Li, M. L.; Meinke, J. H.; Michaud, I. J.; Niedzielewski, K.; Ożański, T.; Rakowski, F.; Scholz, M.; Soni, S.; Srivastava, A.; Zieliński, J.; Zou, D.; Gneiting, T.; Schienle, M. (2021-08-27). <strong>A pre-registered short-term forecasting study of COVID-19 in Germany and Poland during the second wave.</strong> Nature Communications. <a href="https://www.nature.com/articles/s41467-021-25207-0">https://www.nature.com/articles/s41467-021-25207-0</a>.</li>
-<li>Grundel, Sara M.; Heyder, Stefan; Hotz, Thomas; Ritschel, Tobias K. S.; Sauerteig, Philipp; Worthmann, Karl (2021-01-01). <strong>How to Coordinate Vaccination and Social Distancing to Mitigate SARS-CoV-2 Outbreaks.</strong> SIAM Journal on Applied Dynamical Systems. <a href="https://epubs.siam.org/doi/abs/10.1137/20M1387687">https://epubs.siam.org/doi/abs/10.1137/20M1387687</a>.</li>
-</ul>
-</section>
-<section id="section-3" class="level2">
-<h2 class="anchored" data-anchor-id="section-3">2020</h2>
-<ul>
-<li>Miolane, Nina; Guigui, Nicolas; Brigant, Alice Le; Mathe, Johan; Hou, Benjamin; Thanwerdas, Yann; Heyder, Stefan; Peltre, Olivier; Koep, Niklas; Zaatiti, Hadi; Hajri, Hatem; Cabanes, Yann; Gerald, Thomas; Chauchat, Paul; Shewmake, Christian; Brooks, Daniel; Kainz, Bernhard; Donnat, Claire; Holmes, Susan; Pennec, Xavier (2020-11-01). <strong>Geomstats: A Python Package for Riemannian Geometry in Machine Learning.</strong> Journal of Machine Learning Research. <a href="http://jmlr.org/papers/v21/19-027.html">http://jmlr.org/papers/v21/19-027.html</a>.</li>
-<li>Hotz, Thomas; Glock, Matthias; Heyder, Stefan; Semper, Sebastian; Böhle, Anne; Krämer, Alexander (2020-04-18). <strong>Monitoring the spread of COVID-19 by estimating reproduction numbers over time.</strong> arXiv:2004.08557 [q-bio, stat]. <a href="http://arxiv.org/abs/2004.08557">http://arxiv.org/abs/2004.08557</a>.</li>
-</ul>
+</blockquote>
+<p>In a recent project we perforemd a lot of ETL tasks on data that comes from an API. These data are then transformed by a Python package we wrote using airflow and sent back to that API.</p>
+<p>Here is the problem: The quality of the data we receive is suboptimal as it is based on input from humans into a web form. To avoid running into problems further down the line, we use a <a href="https://docs.pydantic.dev/">Pydantic</a> model that makes our implicit assumptions explicit. It works well and has saved us a lot of worry. However, every time there is a validation error occurs, we have to write ticket for the data to be fixed, resulting in a lot of unnecessary work (this happens roughly once a week).</p>
+<p>Much of this could have been avoided, if data validation had taken place much earlier in the process. Although there is validation on the frontend of the web form, there is none on the back end, meaning users can submit anything they want, if they have a JavaScript blocker in place.</p>
+<section id="advantages-of-early-data-validation" class="level2">
+<h2 class="anchored" data-anchor-id="advantages-of-early-data-validation">advantages of early data validation</h2>
+<p>Once data has passed validation, you have defined an interface it. This means that you can avoid writing many conversion (e.g.&nbsp;string to date, parsing strings to floats, …) and null checks later on, and you can be confident that nothing will break due to such implicit assumptions. If combined with properly typed and type-checked Python code, this goes a long way of avoiding bugs.</p>
+<p>Additionally, early data validation also enables you to fail early. Let’s say you persist the data in a database (PostrgeSQL in our case) for one reason or another, and then process that data later on. If you later notice that something is fishy with the data, you will have to clean up or invalidate the faulty data in the database.</p>
+<p>There are probably many more reasons, but these are the ones that I have noticed in our project. ## hurdles to implement early data validation However, there may be challenges in implementing these checks early on. In a bigger project, you have to coordinate with everyone that will use the data on a common definition of what a valid data entry is, including technical and non-technical stakeholders.</p>
+<p>If the data ingestion process is already in place before the goals of data processing are specified it may be hard to add validation later on. This may be due to inertia of the system and also monetary restrictions. Additionally, if validation is put into place after some non-validated data have already entered the system, you now have to distinguish between the new and old data, or clean up the old data.</p>
 
 
 </section>

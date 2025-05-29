@@ -24,6 +24,7 @@ Once data has passed validation, you have defined an interface it. This means th
 Additionally, early data validation also enables you to fail early. Let's say you persist the data in a database (PostrgeSQL in our case) for one reason or another, and then process that data later on. If you later notice that something is fishy with the data, you will have to clean up or invalidate the faulty data in the database. 
 
 There are probably many more reasons, but  these are the ones that I have noticed in our project.
+
 ## hurdles to implement early data validation
 However, there may be challenges in implementing these checks early on. In a bigger project, you have to coordinate with everyone that will use the data on a common definition of what a valid data entry is, including technical and non-technical stakeholders. 
 
