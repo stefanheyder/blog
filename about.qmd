@@ -10,7 +10,7 @@ about:
 
 ---
 
-This is me, Stefan Heyder. I am currently finishing my PhD degree at Technische Universität Ilmenau.
+This is me, Stefan Heyder. I am currently working as a Senior Data Scientist for [singularIT](https://www.singular-it.de) and am finishing my PhD degree at Technische Universität Ilmenau.
 
-I will sporadically use this blog to process my thoughts on computational statistics.
+I will sporadically use this blog to process my thoughts on computational statistics, data science and (new!) project management.
 This might include procrastination on my PhD thesis.
