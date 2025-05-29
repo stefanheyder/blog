@@ -181,7 +181,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="advantages-of-early-data-validation">advantages of early data validation</h2>
 <p>Once data has passed validation, you have defined an interface it. This means that you can avoid writing many conversion (e.g.&nbsp;string to date, parsing strings to floats, …) and null checks later on, and you can be confident that nothing will break due to such implicit assumptions. If combined with properly typed and type-checked Python code, this goes a long way of avoiding bugs.</p>
 <p>Additionally, early data validation also enables you to fail early. Let’s say you persist the data in a database (PostrgeSQL in our case) for one reason or another, and then process that data later on. If you later notice that something is fishy with the data, you will have to clean up or invalidate the faulty data in the database.</p>
-<p>There are probably many more reasons, but these are the ones that I have noticed in our project. ## hurdles to implement early data validation However, there may be challenges in implementing these checks early on. In a bigger project, you have to coordinate with everyone that will use the data on a common definition of what a valid data entry is, including technical and non-technical stakeholders.</p>
+<p>There are probably many more reasons, but these are the ones that I have noticed in our project.</p>
+</section>
+<section id="hurdles-to-implement-early-data-validation" class="level2">
+<h2 class="anchored" data-anchor-id="hurdles-to-implement-early-data-validation">hurdles to implement early data validation</h2>
+<p>However, there may be challenges in implementing these checks early on. In a bigger project, you have to coordinate with everyone that will use the data on a common definition of what a valid data entry is, including technical and non-technical stakeholders.</p>
 <p>If the data ingestion process is already in place before the goals of data processing are specified it may be hard to add validation later on. This may be due to inertia of the system and also monetary restrictions. Additionally, if validation is put into place after some non-validated data have already entered the system, you now have to distinguish between the new and old data, or clean up the old data.</p>
 
 
